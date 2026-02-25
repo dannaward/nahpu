@@ -19,8 +19,8 @@ Visit our website to learn more: [nahpu.app](https://nahpu.app)
 
 ## Supported Catalog Formats
 
-* Birds 🦅
 * Mammals 🐿️
+* Birds 🦅
 * Herpetofauna (in development) 🐍
 * Fishes (in development) 🐠
 * Paleo Vertebrates (planned) 🦣
