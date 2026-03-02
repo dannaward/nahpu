@@ -23,7 +23,7 @@ Visit our website to learn more: [nahpu.app](https://nahpu.app)
 * Birds 🦅
 * Herpetofauna (in development) 🐍
 * Fishes (in development) 🐠
-* Paleo Vertebrates (planned) 🦣
+* Paleo Vertebrates (in development) 🦣
 
 ## Technologies Used
 
