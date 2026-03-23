@@ -214,7 +214,6 @@ class SettingChips extends StatelessWidget {
     super.key,
     required this.title,
     required this.controller,
-    required this.ref,
     required this.textCasePrefString,
     required this.labelText,
     required this.chipList,
@@ -226,7 +225,6 @@ class SettingChips extends StatelessWidget {
 
   final String title;
   final TextEditingController controller;
-  final WidgetRef ref;
   final String textCasePrefString;
   final String labelText;
   final List<Widget> chipList;
@@ -261,7 +259,6 @@ class SettingChips extends StatelessWidget {
                   labelText: labelText,
                   hintText: hintText,
                   onPressed: onPressed,
-                  ref: ref,
                   textCasePrefString: textCasePrefString,
                 )),
             IconButton(
@@ -289,14 +286,13 @@ class SettingChips extends StatelessWidget {
   }
 }
 
-class AsyncTextField extends StatelessWidget {
+class AsyncTextField extends ConsumerWidget {
   const AsyncTextField({
     super.key,
     required this.controller,
     required this.labelText,
     required this.hintText,
     required this.onPressed,
-    required this.ref,
     required this.textCasePrefString,
   });
 
@@ -304,12 +300,11 @@ class AsyncTextField extends StatelessWidget {
   final String labelText;
   final String hintText;
   final VoidCallback onPressed;
-  final WidgetRef ref;
   final String textCasePrefString;
 
   @override
-  Widget build(BuildContext context) {
-    return ref.watch(textCaseFmtNotifierProvider(textCasePrefString)).when(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ref.watch(textCaseFmtProvider(textCasePrefString)).when(
           data: (fmt) => TextField(
             controller: controller,
             decoration: InputDecoration(
@@ -336,21 +331,19 @@ class AsyncTextField extends StatelessWidget {
   }
 }
 
-class TextCaseFmtDropDown extends StatelessWidget {
+class TextCaseFmtDropDown extends ConsumerWidget {
   const TextCaseFmtDropDown({
     super.key,
-    required this.ref,
     required this.label,
     required this.textCasePrefString,
   });
 
-  final WidgetRef ref;
   final String label;
   final String textCasePrefString;
 
   @override
-  Widget build(BuildContext context) {
-    return ref.watch(textCaseFmtNotifierProvider(textCasePrefString)).when(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ref.watch(textCaseFmtProvider(textCasePrefString)).when(
           data: (fmt) => DropdownButtonFormField<TextCaseFmt>(
               initialValue: fmt,
               decoration: InputDecoration(
@@ -363,8 +356,7 @@ class TextCaseFmtDropDown extends StatelessWidget {
               onChanged: (TextCaseFmt? selectedFmt) {
                 if (selectedFmt != null) {
                   ref
-                      .read(textCaseFmtNotifierProvider(textCasePrefString)
-                          .notifier)
+                      .read(textCaseFmtProvider(textCasePrefString).notifier)
                       .set(textCasePrefString, selectedFmt);
                 }
               }),

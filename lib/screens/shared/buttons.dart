@@ -13,7 +13,7 @@ class ProjectBackButton extends ConsumerWidget {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return const Dashboard();
         }));
-        ref.read(projectNavbarIndexProvider.notifier).state = 0;
+        ref.read(projectNavbarIndexProvider.notifier).update(0);
       },
     );
   }

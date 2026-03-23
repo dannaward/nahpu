@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 
 String get uuid => const Uuid().v4();
 
-get defaultCatalog => 'general-mammals';
+String get defaultCatalog => 'general-mammals';
 
 class ProjectServices extends AppServices {
   const ProjectServices({required super.ref});

@@ -57,11 +57,8 @@ class SiteFormats extends ConsumerWidget {
             useHorizontalLayout: !isMobile,
             children: [
               TextCaseFmtDropDown(
-                  ref: ref,
-                  label: 'Site types',
-                  textCasePrefString: siteTypeFmtPrefKey),
+                  label: 'Site types', textCasePrefString: siteTypeFmtPrefKey),
               TextCaseFmtDropDown(
-                  ref: ref,
                   label: 'Habitat types',
                   textCasePrefString: habitatTypeFmtPrefKey),
             ],

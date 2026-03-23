@@ -6,350 +6,266 @@ part of 'settings.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$settingHash() => r'b4ffdf1319400e689586e0f3860362fbad56142e';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [setting].
 @ProviderFor(setting)
-final settingProvider = Provider<SharedPreferences>.internal(
-  setting,
-  name: r'settingProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$settingHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final settingProvider = SettingProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef SettingRef = ProviderRef<SharedPreferences>;
-String _$themeSettingHash() => r'6c0fd6288d1348a4a74fd96f16a8d7e40821e875';
-
-/// See also [ThemeSetting].
-@ProviderFor(ThemeSetting)
-final themeSettingProvider =
-    AsyncNotifierProvider<ThemeSetting, ThemeMode>.internal(
-  ThemeSetting.new,
-  name: r'themeSettingProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$themeSettingHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$ThemeSetting = AsyncNotifier<ThemeMode>;
-String _$userDefinedFieldHash() => r'a2abef79db47f21b2ae7b1ae32595d56e45ebb8a';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-abstract class _$UserDefinedField
-    extends BuildlessAutoDisposeAsyncNotifier<List<String>> {
-  late final String prefKey;
-
-  FutureOr<List<String>> build(
-    String prefKey,
-  );
-}
-
-/// See also [UserDefinedField].
-@ProviderFor(UserDefinedField)
-const userDefinedFieldProvider = UserDefinedFieldFamily();
-
-/// See also [UserDefinedField].
-class UserDefinedFieldFamily extends Family<AsyncValue<List<String>>> {
-  /// See also [UserDefinedField].
-  const UserDefinedFieldFamily();
-
-  /// See also [UserDefinedField].
-  UserDefinedFieldProvider call(
-    String prefKey,
-  ) {
-    return UserDefinedFieldProvider(
-      prefKey,
-    );
-  }
-
-  @override
-  UserDefinedFieldProvider getProviderOverride(
-    covariant UserDefinedFieldProvider provider,
-  ) {
-    return call(
-      provider.prefKey,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'userDefinedFieldProvider';
-}
-
-/// See also [UserDefinedField].
-class UserDefinedFieldProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    UserDefinedField, List<String>> {
-  /// See also [UserDefinedField].
-  UserDefinedFieldProvider(
-    String prefKey,
-  ) : this._internal(
-          () => UserDefinedField()..prefKey = prefKey,
-          from: userDefinedFieldProvider,
-          name: r'userDefinedFieldProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$userDefinedFieldHash,
-          dependencies: UserDefinedFieldFamily._dependencies,
-          allTransitiveDependencies:
-              UserDefinedFieldFamily._allTransitiveDependencies,
-          prefKey: prefKey,
+final class SettingProvider extends $FunctionalProvider<SharedPreferences,
+    SharedPreferences, SharedPreferences> with $Provider<SharedPreferences> {
+  SettingProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'settingProvider',
+          isAutoDispose: false,
+          dependencies: null,
+          $allTransitiveDependencies: null,
         );
 
-  UserDefinedFieldProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.prefKey,
-  }) : super.internal();
+  @override
+  String debugGetCreateSourceHash() => _$settingHash();
 
-  final String prefKey;
+  @$internal
+  @override
+  $ProviderElement<SharedPreferences> $createElement(
+          $ProviderPointer pointer) =>
+      $ProviderElement(pointer);
 
   @override
-  FutureOr<List<String>> runNotifierBuild(
-    covariant UserDefinedField notifier,
-  ) {
-    return notifier.build(
-      prefKey,
-    );
+  SharedPreferences create(Ref ref) {
+    return setting(ref);
   }
 
-  @override
-  Override overrideWith(UserDefinedField Function() create) {
-    return ProviderOverride(
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(SharedPreferences value) {
+    return $ProviderOverride(
       origin: this,
-      override: UserDefinedFieldProvider._internal(
-        () => create()..prefKey = prefKey,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        prefKey: prefKey,
-      ),
+      providerOverride: $SyncValueProvider<SharedPreferences>(value),
     );
   }
+}
+
+String _$settingHash() => r'b4ffdf1319400e689586e0f3860362fbad56142e';
+
+@ProviderFor(ThemeSetting)
+final themeSettingProvider = ThemeSettingProvider._();
+
+final class ThemeSettingProvider
+    extends $AsyncNotifierProvider<ThemeSetting, ThemeMode> {
+  ThemeSettingProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'themeSettingProvider',
+          isAutoDispose: false,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<UserDefinedField, List<String>>
-      createElement() {
-    return _UserDefinedFieldProviderElement(this);
+  String debugGetCreateSourceHash() => _$themeSettingHash();
+
+  @$internal
+  @override
+  ThemeSetting create() => ThemeSetting();
+}
+
+String _$themeSettingHash() => r'6c0fd6288d1348a4a74fd96f16a8d7e40821e875';
+
+abstract class _$ThemeSetting extends $AsyncNotifier<ThemeMode> {
+  FutureOr<ThemeMode> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<ThemeMode>, ThemeMode>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<ThemeMode>, ThemeMode>,
+        AsyncValue<ThemeMode>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
   }
+}
+
+@ProviderFor(UserDefinedField)
+final userDefinedFieldProvider = UserDefinedFieldFamily._();
+
+final class UserDefinedFieldProvider
+    extends $AsyncNotifierProvider<UserDefinedField, List<String>> {
+  UserDefinedFieldProvider._(
+      {required UserDefinedFieldFamily super.from,
+      required String super.argument})
+      : super(
+          retry: null,
+          name: r'userDefinedFieldProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$userDefinedFieldHash();
+
+  @override
+  String toString() {
+    return r'userDefinedFieldProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  UserDefinedField create() => UserDefinedField();
 
   @override
   bool operator ==(Object other) {
-    return other is UserDefinedFieldProvider && other.prefKey == prefKey;
+    return other is UserDefinedFieldProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, prefKey.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin UserDefinedFieldRef on AutoDisposeAsyncNotifierProviderRef<List<String>> {
-  /// The parameter `prefKey` of this provider.
-  String get prefKey;
-}
+String _$userDefinedFieldHash() => r'a2abef79db47f21b2ae7b1ae32595d56e45ebb8a';
 
-class _UserDefinedFieldProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<UserDefinedField,
-        List<String>> with UserDefinedFieldRef {
-  _UserDefinedFieldProviderElement(super.provider);
+final class UserDefinedFieldFamily extends $Family
+    with
+        $ClassFamilyOverride<UserDefinedField, AsyncValue<List<String>>,
+            List<String>, FutureOr<List<String>>, String> {
+  UserDefinedFieldFamily._()
+      : super(
+          retry: null,
+          name: r'userDefinedFieldProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  UserDefinedFieldProvider call(
+    String prefKey,
+  ) =>
+      UserDefinedFieldProvider._(argument: prefKey, from: this);
 
   @override
-  String get prefKey => (origin as UserDefinedFieldProvider).prefKey;
+  String toString() => r'userDefinedFieldProvider';
+}
+
+abstract class _$UserDefinedField extends $AsyncNotifier<List<String>> {
+  late final _$args = ref.$arg as String;
+  String get prefKey => _$args;
+
+  FutureOr<List<String>> build(
+    String prefKey,
+  );
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<List<String>>, List<String>>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<List<String>>, List<String>>,
+        AsyncValue<List<String>>,
+        Object?,
+        Object?>;
+    element.handleCreate(
+        ref,
+        () => build(
+              _$args,
+            ));
+  }
+}
+
+@ProviderFor(TextCaseFmtNotifier)
+final textCaseFmtProvider = TextCaseFmtNotifierFamily._();
+
+final class TextCaseFmtNotifierProvider
+    extends $AsyncNotifierProvider<TextCaseFmtNotifier, TextCaseFmt> {
+  TextCaseFmtNotifierProvider._(
+      {required TextCaseFmtNotifierFamily super.from,
+      required String super.argument})
+      : super(
+          retry: null,
+          name: r'textCaseFmtProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$textCaseFmtNotifierHash();
+
+  @override
+  String toString() {
+    return r'textCaseFmtProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  TextCaseFmtNotifier create() => TextCaseFmtNotifier();
+
+  @override
+  bool operator ==(Object other) {
+    return other is TextCaseFmtNotifierProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
 }
 
 String _$textCaseFmtNotifierHash() =>
     r'81bb739ee4cbc4ddbbf686b24778fbe0ee24562e';
 
-abstract class _$TextCaseFmtNotifier
-    extends BuildlessAutoDisposeAsyncNotifier<TextCaseFmt> {
-  late final String prefKey;
+final class TextCaseFmtNotifierFamily extends $Family
+    with
+        $ClassFamilyOverride<TextCaseFmtNotifier, AsyncValue<TextCaseFmt>,
+            TextCaseFmt, FutureOr<TextCaseFmt>, String> {
+  TextCaseFmtNotifierFamily._()
+      : super(
+          retry: null,
+          name: r'textCaseFmtProvider',
+          dependencies: null,
+          $allTransitiveDependencies: null,
+          isAutoDispose: true,
+        );
+
+  TextCaseFmtNotifierProvider call(
+    String prefKey,
+  ) =>
+      TextCaseFmtNotifierProvider._(argument: prefKey, from: this);
+
+  @override
+  String toString() => r'textCaseFmtProvider';
+}
+
+abstract class _$TextCaseFmtNotifier extends $AsyncNotifier<TextCaseFmt> {
+  late final _$args = ref.$arg as String;
+  String get prefKey => _$args;
 
   FutureOr<TextCaseFmt> build(
     String prefKey,
   );
-}
-
-/// See also [TextCaseFmtNotifier].
-@ProviderFor(TextCaseFmtNotifier)
-const textCaseFmtNotifierProvider = TextCaseFmtNotifierFamily();
-
-/// See also [TextCaseFmtNotifier].
-class TextCaseFmtNotifierFamily extends Family<AsyncValue<TextCaseFmt>> {
-  /// See also [TextCaseFmtNotifier].
-  const TextCaseFmtNotifierFamily();
-
-  /// See also [TextCaseFmtNotifier].
-  TextCaseFmtNotifierProvider call(
-    String prefKey,
-  ) {
-    return TextCaseFmtNotifierProvider(
-      prefKey,
-    );
-  }
-
+  @$mustCallSuper
   @override
-  TextCaseFmtNotifierProvider getProviderOverride(
-    covariant TextCaseFmtNotifierProvider provider,
-  ) {
-    return call(
-      provider.prefKey,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'textCaseFmtNotifierProvider';
-}
-
-/// See also [TextCaseFmtNotifier].
-class TextCaseFmtNotifierProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    TextCaseFmtNotifier, TextCaseFmt> {
-  /// See also [TextCaseFmtNotifier].
-  TextCaseFmtNotifierProvider(
-    String prefKey,
-  ) : this._internal(
-          () => TextCaseFmtNotifier()..prefKey = prefKey,
-          from: textCaseFmtNotifierProvider,
-          name: r'textCaseFmtNotifierProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$textCaseFmtNotifierHash,
-          dependencies: TextCaseFmtNotifierFamily._dependencies,
-          allTransitiveDependencies:
-              TextCaseFmtNotifierFamily._allTransitiveDependencies,
-          prefKey: prefKey,
-        );
-
-  TextCaseFmtNotifierProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.prefKey,
-  }) : super.internal();
-
-  final String prefKey;
-
-  @override
-  FutureOr<TextCaseFmt> runNotifierBuild(
-    covariant TextCaseFmtNotifier notifier,
-  ) {
-    return notifier.build(
-      prefKey,
-    );
-  }
-
-  @override
-  Override overrideWith(TextCaseFmtNotifier Function() create) {
-    return ProviderOverride(
-      origin: this,
-      override: TextCaseFmtNotifierProvider._internal(
-        () => create()..prefKey = prefKey,
-        from: from,
-        name: null,
-        dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        prefKey: prefKey,
-      ),
-    );
-  }
-
-  @override
-  AutoDisposeAsyncNotifierProviderElement<TextCaseFmtNotifier, TextCaseFmt>
-      createElement() {
-    return _TextCaseFmtNotifierProviderElement(this);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is TextCaseFmtNotifierProvider && other.prefKey == prefKey;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, prefKey.hashCode);
-
-    return _SystemHash.finish(hash);
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<TextCaseFmt>, TextCaseFmt>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<TextCaseFmt>, TextCaseFmt>,
+        AsyncValue<TextCaseFmt>,
+        Object?,
+        Object?>;
+    element.handleCreate(
+        ref,
+        () => build(
+              _$args,
+            ));
   }
 }
-
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-mixin TextCaseFmtNotifierRef
-    on AutoDisposeAsyncNotifierProviderRef<TextCaseFmt> {
-  /// The parameter `prefKey` of this provider.
-  String get prefKey;
-}
-
-class _TextCaseFmtNotifierProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<TextCaseFmtNotifier,
-        TextCaseFmt> with TextCaseFmtNotifierRef {
-  _TextCaseFmtNotifierProviderElement(super.provider);
-
-  @override
-  String get prefKey => (origin as TextCaseFmtNotifierProvider).prefKey;
-}
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

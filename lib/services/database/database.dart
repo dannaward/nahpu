@@ -71,7 +71,6 @@ class Database extends _$Database {
       if (from < 7) {
         await _migrateFromVersion6(m);
       }
-
     }, beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
     });
@@ -102,6 +101,9 @@ class Database extends _$Database {
     // Herpetofauna measurements
     await m.createTable(herpMeasurement);
 
+    // Parasite data
+    await m.createTable(parasite);
+
     // Boolean for showing bat-specific measurements
     await m.addColumn(mammalMeasurement, mammalMeasurement.showBatFields);
     await setShowBatFieldsBoolean(m);
@@ -115,6 +117,14 @@ class Database extends _$Database {
     await m.addColumn(
         mammalMeasurement, mammalMeasurement.frequencyAtMaxEnergy);
     await m.addColumn(mammalMeasurement, mammalMeasurement.duration);
+
+    // Parasite check and detection columns
+    await m.addColumn(mammalMeasurement, mammalMeasurement.parasiteExamine);
+    await m.addColumn(mammalMeasurement, mammalMeasurement.parasiteDetected);
+    await m.addColumn(herpMeasurement, herpMeasurement.parasiteExamine);
+    await m.addColumn(herpMeasurement, herpMeasurement.parasiteDetected);
+    await m.addColumn(avianMeasurement, avianMeasurement.parasiteExamine);
+    await m.addColumn(avianMeasurement, avianMeasurement.parasiteDetected);
   }
 
   Future<void> _migrateFromVersion5(Migrator m) async {

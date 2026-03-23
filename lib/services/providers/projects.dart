@@ -1,37 +1,31 @@
-/// Project module providers contain all the providers related to the project,
-/// Except for the project form validation provider, which is in the validation.dart file.
-library;
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nahpu/services/providers/database.dart';
 import 'package:nahpu/services/database/database.dart' as db;
 import 'package:nahpu/services/database/project_queries.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'projects.g.dart';
+final projectListProvider = FutureProvider.autoDispose<List<ListProjectResult>>(
+    (ref) => ProjectQuery(ref.read(databaseProvider)).getProjectList());
 
-final projectListProvider =
-    FutureProvider.autoDispose<List<ListProjectResult>>((ref) {
-  return ProjectQuery(ref.read(databaseProvider)).getProjectList();
-});
+final projectInfoProvider = FutureProvider.autoDispose
+    .family<db.ProjectData?, String>((ref, uuid) =>
+        ProjectQuery(ref.read(databaseProvider)).getProjectByUuid(uuid));
 
-final projectInfoProvider =
-    FutureProvider.family<db.ProjectData?, String>((ref, uuid) async {
-  final projectInfo =
-      ProjectQuery(ref.read(databaseProvider)).getProjectByUuid(uuid);
-  return await projectInfo;
-});
-
-@Riverpod(keepAlive: true)
-class ProjectUuid extends _$ProjectUuid {
+class ProjectUuid extends Notifier<String> {
   @override
-  String build() {
-    return '';
-  }
+  String build() => '';
 
-  void updateProjectUuid(String uuid) {
-    state = uuid;
-  }
+  void updateProjectUuid(String uuid) => state = uuid;
 }
 
-final projectNavbarIndexProvider = StateProvider.autoDispose<int>((ref) => 0);
+final projectUuidProvider =
+    NotifierProvider<ProjectUuid, String>(ProjectUuid.new);
+
+class ProjectNavbarIndex extends Notifier<int> {
+  @override
+  int build() => 0;
+
+  void update(int index) => state = index;
+}
+
+final projectNavbarIndexProvider =
+    NotifierProvider<ProjectNavbarIndex, int>(ProjectNavbarIndex.new);

@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nahpu/services/providers/database.dart';
 import 'package:nahpu/services/providers/settings.dart';
 import 'package:nahpu/services/database/database.dart';
@@ -5,26 +8,18 @@ import 'package:nahpu/services/providers/projects.dart';
 import 'package:nahpu/services/database/media_queries.dart';
 import 'package:nahpu/services/database/specimen_queries.dart';
 import 'package:nahpu/services/types/specimens.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'specimens.g.dart';
 
 const String catalogFmtPrefKey = 'catalogFmt';
 
-@riverpod
-class CatalogFmtNotifier extends _$CatalogFmtNotifier {
+class CatalogFmtNotifier extends AsyncNotifier<CatalogFmt> {
   Future<CatalogFmt> _fetchSetting() async {
     final prefs = ref.watch(settingProvider);
     final savedFmt = prefs.getString(catalogFmtPrefKey);
-
-    // Set to default general mammals if no setting is found
     final CatalogFmt currentFmt = matchTaxonGroupToCatFmt(savedFmt);
     if (savedFmt == null) {
       await prefs.setString(
           catalogFmtPrefKey, matchCatFmtToTaxonGroup(currentFmt));
     }
-
     return currentFmt;
   }
 
@@ -34,7 +29,7 @@ class CatalogFmtNotifier extends _$CatalogFmtNotifier {
   }
 
   Future<void> set(CatalogFmt fmt) async {
-    state = const AsyncValue.loading();
+    state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final prefs = ref.watch(settingProvider);
       final value = prefs.getString(catalogFmtPrefKey);
@@ -46,15 +41,16 @@ class CatalogFmtNotifier extends _$CatalogFmtNotifier {
   }
 }
 
-@riverpod
-class SpecimenEntry extends _$SpecimenEntry {
+final catalogFmtNotifierProvider =
+    AsyncNotifierProvider<CatalogFmtNotifier, CatalogFmt>(
+  CatalogFmtNotifier.new,
+);
+
+class SpecimenEntry extends AsyncNotifier<List<SpecimenData>> {
   Future<List<SpecimenData>> _fetchSpecimenEntry() async {
     final projectUuid = ref.watch(projectUuidProvider);
-
-    final specimenEntries = await SpecimenQuery(ref.read(databaseProvider))
+    return SpecimenQuery(ref.read(databaseProvider))
         .getAllSpecimens(projectUuid);
-
-    return specimenEntries;
   }
 
   @override
@@ -63,29 +59,28 @@ class SpecimenEntry extends _$SpecimenEntry {
   }
 }
 
-final partBySpecimenProvider = FutureProvider.family
-    .autoDispose<List<SpecimenPartData>, String>((ref, specimenUuid) =>
+final specimenEntryProvider =
+    AsyncNotifierProvider<SpecimenEntry, List<SpecimenData>>(
+  SpecimenEntry.new,
+);
+
+final partBySpecimenProvider = FutureProvider.autoDispose
+    .family<List<SpecimenPartData>, String>((ref, specimenUuid) =>
         SpecimenPartQuery(ref.read(databaseProvider))
             .getSpecimenParts(specimenUuid));
 
-@riverpod
-Future<List<AssociatedDataData>> associatedData(Ref ref,
-    {required String specimenUuid}) async {
-  final associatedDataEntries =
-      await AssociatedDataQuery(ref.read(databaseProvider))
-          .getAllAssociatedData(specimenUuid);
+final associatedDataProvider = FutureProvider.autoDispose
+    .family<List<AssociatedDataData>, String>((ref, specimenUuid) =>
+        AssociatedDataQuery(ref.read(databaseProvider))
+            .getAllAssociatedData(specimenUuid));
 
-  return associatedDataEntries;
-}
-
-@riverpod
-Future<List<MediaData>> specimenMedia(Ref ref,
-    {required String specimenUuid}) async {
-  List<SpecimenMediaData> mediaList =
+final specimenMediaProvider = FutureProvider.autoDispose
+    .family<List<MediaData>, String>((ref, specimenUuid) async {
+  final List<SpecimenMediaData> mediaList =
       await SpecimenQuery(ref.read(databaseProvider))
           .getSpecimenMedia(specimenUuid);
-  List<MediaData> mediaDataList = [];
-  for (SpecimenMediaData media in mediaList) {
+  final List<MediaData> mediaDataList = [];
+  for (final SpecimenMediaData media in mediaList) {
     if (media.mediaId != null) {
       mediaDataList.add(
         await MediaDbQuery(ref.read(databaseProvider)).getMedia(media.mediaId!),
@@ -93,4 +88,4 @@ Future<List<MediaData>> specimenMedia(Ref ref,
     }
   }
   return mediaDataList;
-}
+});

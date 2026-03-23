@@ -6,39 +6,89 @@ part of 'validation.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(ProjectFormValidator)
+final projectFormValidatorProvider = ProjectFormValidatorProvider._();
+
+final class ProjectFormValidatorProvider
+    extends $AsyncNotifierProvider<ProjectFormValidator, ProjectForm> {
+  ProjectFormValidatorProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'projectFormValidatorProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$projectFormValidatorHash();
+
+  @$internal
+  @override
+  ProjectFormValidator create() => ProjectFormValidator();
+}
+
 String _$projectFormValidatorHash() =>
     r'c5868fad77bf661e6a072af4b88d775e4c9a40e1';
 
-/// See also [ProjectFormValidator].
-@ProviderFor(ProjectFormValidator)
-final projectFormValidatorProvider = AutoDisposeAsyncNotifierProvider<
-    ProjectFormValidator, ProjectForm>.internal(
-  ProjectFormValidator.new,
-  name: r'projectFormValidatorProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$projectFormValidatorHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+abstract class _$ProjectFormValidator extends $AsyncNotifier<ProjectForm> {
+  FutureOr<ProjectForm> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<ProjectForm>, ProjectForm>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<ProjectForm>, ProjectForm>,
+        AsyncValue<ProjectForm>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}
 
-typedef _$ProjectFormValidator = AutoDisposeAsyncNotifier<ProjectForm>;
+@ProviderFor(PersonnelFormValidator)
+final personnelFormValidatorProvider = PersonnelFormValidatorProvider._();
+
+final class PersonnelFormValidatorProvider
+    extends $AsyncNotifierProvider<PersonnelFormValidator, PersonnelForm> {
+  PersonnelFormValidatorProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'personnelFormValidatorProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$personnelFormValidatorHash();
+
+  @$internal
+  @override
+  PersonnelFormValidator create() => PersonnelFormValidator();
+}
+
 String _$personnelFormValidatorHash() =>
     r'6f88b4567febb79f75716be9a917c4a8c6aff78d';
 
-/// See also [PersonnelFormValidator].
-@ProviderFor(PersonnelFormValidator)
-final personnelFormValidatorProvider = AutoDisposeAsyncNotifierProvider<
-    PersonnelFormValidator, PersonnelForm>.internal(
-  PersonnelFormValidator.new,
-  name: r'personnelFormValidatorProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$personnelFormValidatorHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$PersonnelFormValidator = AutoDisposeAsyncNotifier<PersonnelForm>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$PersonnelFormValidator extends $AsyncNotifier<PersonnelForm> {
+  FutureOr<PersonnelForm> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<PersonnelForm>, PersonnelForm>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<PersonnelForm>, PersonnelForm>,
+        AsyncValue<PersonnelForm>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}

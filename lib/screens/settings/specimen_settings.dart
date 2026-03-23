@@ -102,11 +102,9 @@ class SpecimenFormats extends ConsumerWidget {
             useHorizontalLayout: !isMobile,
             children: [
               TextCaseFmtDropDown(
-                  ref: ref,
                   label: 'Specimen part types',
                   textCasePrefString: specimenTypeFmtPrefKey),
               TextCaseFmtDropDown(
-                  ref: ref,
                   label: 'Treatment types',
                   textCasePrefString: treatmentFmtPrefKey),
             ],

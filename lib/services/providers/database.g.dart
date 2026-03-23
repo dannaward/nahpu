@@ -6,21 +6,46 @@ part of 'database.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$databaseHash() => r'ed9c95103fdf22252e8cb2792060c8b12714ce12';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [database].
 @ProviderFor(database)
-final databaseProvider = Provider<Database>.internal(
-  database,
-  name: r'databaseProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$databaseHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final databaseProvider = DatabaseProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef DatabaseRef = ProviderRef<Database>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class DatabaseProvider
+    extends $FunctionalProvider<Database, Database, Database>
+    with $Provider<Database> {
+  DatabaseProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'databaseProvider',
+          isAutoDispose: false,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$databaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<Database> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  Database create(Ref ref) {
+    return database(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Database value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Database>(value),
+    );
+  }
+}
+
+String _$databaseHash() => r'ed9c95103fdf22252e8cb2792060c8b12714ce12';

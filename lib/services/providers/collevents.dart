@@ -1,23 +1,22 @@
 import 'dart:async';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nahpu/services/providers/database.dart';
 import 'package:nahpu/services/collevent_services.dart';
 import 'package:nahpu/services/database/collevent_queries.dart';
 import 'package:nahpu/services/database/database.dart';
 import 'package:nahpu/services/providers/projects.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'collevents.g.dart';
+final collEventEntryProvider =
+    AsyncNotifierProvider<CollEventEntry, List<CollEventData>>(
+  CollEventEntry.new,
+);
 
-@riverpod
-class CollEventEntry extends _$CollEventEntry {
+class CollEventEntry extends AsyncNotifier<List<CollEventData>> {
   Future<List<CollEventData>> _fetchCollEventEntry() async {
     final projectUuid = ref.watch(projectUuidProvider);
-
-    final collEvents = CollEventQuery(ref.read(databaseProvider))
+    return CollEventQuery(ref.read(databaseProvider))
         .getAllCollEvents(projectUuid);
-
-    return collEvents;
   }
 
   @override
@@ -27,34 +26,32 @@ class CollEventEntry extends _$CollEventEntry {
 
   Future<void> search(String? query) async {
     if (query == null || query.isEmpty) return;
-    state = const AsyncValue.loading();
+    final current = await future;
+    if (current.isEmpty) return;
+
+    state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      if (state.value == null) return [];
       final collEvents = await _fetchCollEventEntry();
-      final filteredCollEvents = CollEventSearchServices(collEvents: collEvents)
+      return CollEventSearchServices(collEvents: collEvents)
           .search(query.toLowerCase());
-      return filteredCollEvents;
     });
   }
 }
 
-final collEventIDprovider =
-    FutureProvider.family.autoDispose<CollEventData, int>((ref, id) async {
-  final collEventID =
-      CollEventQuery(ref.read(databaseProvider)).getCollEventById(id);
-  return collEventID;
-});
+final collEventIDProvider = FutureProvider.autoDispose
+    .family<CollEventData, int>((ref, id) =>
+        CollEventQuery(ref.read(databaseProvider)).getCollEventById(id));
 
-final collEffortByEventProvider = FutureProvider.family
-    .autoDispose<List<CollEffortData>, int>((ref, collEventId) =>
+final collEffortByEventProvider = FutureProvider.autoDispose
+    .family<List<CollEffortData>, int>((ref, collEventId) =>
         CollEffortQuery(ref.read(databaseProvider))
             .getCollEffortByEventId(collEventId));
 
-final collPersonnelProvider = FutureProvider.family
-    .autoDispose<List<CollPersonnelData>, int>((ref, collEventId) =>
+final collPersonnelProvider = FutureProvider.autoDispose
+    .family<List<CollPersonnelData>, int>((ref, collEventId) =>
         CollPersonnelQuery(ref.read(databaseProvider))
             .getCollPersonnelByEventId(collEventId));
 
-final weatherDataProvider = FutureProvider.family.autoDispose<WeatherData, int>(
+final weatherDataProvider = FutureProvider.autoDispose.family<WeatherData, int>(
     (ref, collEventId) => WeatherDataQuery(ref.read(databaseProvider))
         .getWeatherDataByEventId(collEventId));

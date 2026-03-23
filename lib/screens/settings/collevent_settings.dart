@@ -57,11 +57,9 @@ class EventFormats extends ConsumerWidget {
             useHorizontalLayout: !isMobile,
             children: [
               TextCaseFmtDropDown(
-                  ref: ref,
                   label: 'Collection methods',
                   textCasePrefString: collMethodFmtPrefKey),
               TextCaseFmtDropDown(
-                  ref: ref,
                   label: 'Personnel roles',
                   textCasePrefString: collRoleFmtPrefKey),
             ],

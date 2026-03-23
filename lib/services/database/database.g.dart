@@ -8847,6 +8847,20 @@ class MammalMeasurement extends Table
       type: DriftSqlType.int,
       requiredDuringInsert: false,
       $customConstraints: '');
+  static const VerificationMeta _parasiteExamineMeta =
+      const VerificationMeta('parasiteExamine');
+  late final GeneratedColumn<int> parasiteExamine = GeneratedColumn<int>(
+      'parasiteExamine', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _parasiteDetectedMeta =
+      const VerificationMeta('parasiteDetected');
+  late final GeneratedColumn<int> parasiteDetected = GeneratedColumn<int>(
+      'parasiteDetected', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
   static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
   late final GeneratedColumn<String> remark = GeneratedColumn<String>(
       'remark', aliasedName, true,
@@ -8890,6 +8904,8 @@ class MammalMeasurement extends Table
         embryoLeftCount,
         embryoRightCount,
         embryoCR,
+        parasiteExamine,
+        parasiteDetected,
         remark
       ];
   @override
@@ -9097,6 +9113,18 @@ class MammalMeasurement extends Table
       context.handle(_embryoCRMeta,
           embryoCR.isAcceptableOrUnknown(data['embryoCR']!, _embryoCRMeta));
     }
+    if (data.containsKey('parasiteExamine')) {
+      context.handle(
+          _parasiteExamineMeta,
+          parasiteExamine.isAcceptableOrUnknown(
+              data['parasiteExamine']!, _parasiteExamineMeta));
+    }
+    if (data.containsKey('parasiteDetected')) {
+      context.handle(
+          _parasiteDetectedMeta,
+          parasiteDetected.isAcceptableOrUnknown(
+              data['parasiteDetected']!, _parasiteDetectedMeta));
+    }
     if (data.containsKey('remark')) {
       context.handle(_remarkMeta,
           remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta));
@@ -9180,6 +9208,10 @@ class MammalMeasurement extends Table
           .read(DriftSqlType.int, data['${effectivePrefix}embryoRightCount']),
       embryoCR: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}embryoCR']),
+      parasiteExamine: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}parasiteExamine']),
+      parasiteDetected: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}parasiteDetected']),
       remark: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}remark']),
     );
@@ -9236,6 +9268,8 @@ class MammalMeasurementData extends DataClass
   final int? embryoLeftCount;
   final int? embryoRightCount;
   final int? embryoCR;
+  final int? parasiteExamine;
+  final int? parasiteDetected;
   final String? remark;
   const MammalMeasurementData(
       {required this.specimenUuid,
@@ -9273,6 +9307,8 @@ class MammalMeasurementData extends DataClass
       this.embryoLeftCount,
       this.embryoRightCount,
       this.embryoCR,
+      this.parasiteExamine,
+      this.parasiteDetected,
       this.remark});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -9380,6 +9416,12 @@ class MammalMeasurementData extends DataClass
     if (!nullToAbsent || embryoCR != null) {
       map['embryoCR'] = Variable<int>(embryoCR);
     }
+    if (!nullToAbsent || parasiteExamine != null) {
+      map['parasiteExamine'] = Variable<int>(parasiteExamine);
+    }
+    if (!nullToAbsent || parasiteDetected != null) {
+      map['parasiteDetected'] = Variable<int>(parasiteDetected);
+    }
     if (!nullToAbsent || remark != null) {
       map['remark'] = Variable<String>(remark);
     }
@@ -9485,6 +9527,12 @@ class MammalMeasurementData extends DataClass
       embryoCR: embryoCR == null && nullToAbsent
           ? const Value.absent()
           : Value(embryoCR),
+      parasiteExamine: parasiteExamine == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parasiteExamine),
+      parasiteDetected: parasiteDetected == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parasiteDetected),
       remark:
           remark == null && nullToAbsent ? const Value.absent() : Value(remark),
     );
@@ -9535,6 +9583,8 @@ class MammalMeasurementData extends DataClass
       embryoLeftCount: serializer.fromJson<int?>(json['embryoLeftCount']),
       embryoRightCount: serializer.fromJson<int?>(json['embryoRightCount']),
       embryoCR: serializer.fromJson<int?>(json['embryoCR']),
+      parasiteExamine: serializer.fromJson<int?>(json['parasiteExamine']),
+      parasiteDetected: serializer.fromJson<int?>(json['parasiteDetected']),
       remark: serializer.fromJson<String?>(json['remark']),
     );
   }
@@ -9577,6 +9627,8 @@ class MammalMeasurementData extends DataClass
       'embryoLeftCount': serializer.toJson<int?>(embryoLeftCount),
       'embryoRightCount': serializer.toJson<int?>(embryoRightCount),
       'embryoCR': serializer.toJson<int?>(embryoCR),
+      'parasiteExamine': serializer.toJson<int?>(parasiteExamine),
+      'parasiteDetected': serializer.toJson<int?>(parasiteDetected),
       'remark': serializer.toJson<String?>(remark),
     };
   }
@@ -9617,6 +9669,8 @@ class MammalMeasurementData extends DataClass
           Value<int?> embryoLeftCount = const Value.absent(),
           Value<int?> embryoRightCount = const Value.absent(),
           Value<int?> embryoCR = const Value.absent(),
+          Value<int?> parasiteExamine = const Value.absent(),
+          Value<int?> parasiteDetected = const Value.absent(),
           Value<String?> remark = const Value.absent()}) =>
       MammalMeasurementData(
         specimenUuid: specimenUuid ?? this.specimenUuid,
@@ -9688,6 +9742,12 @@ class MammalMeasurementData extends DataClass
             ? embryoRightCount.value
             : this.embryoRightCount,
         embryoCR: embryoCR.present ? embryoCR.value : this.embryoCR,
+        parasiteExamine: parasiteExamine.present
+            ? parasiteExamine.value
+            : this.parasiteExamine,
+        parasiteDetected: parasiteDetected.present
+            ? parasiteDetected.value
+            : this.parasiteDetected,
         remark: remark.present ? remark.value : this.remark,
       );
   MammalMeasurementData copyWithCompanion(MammalMeasurementCompanion data) {
@@ -9776,6 +9836,12 @@ class MammalMeasurementData extends DataClass
           ? data.embryoRightCount.value
           : this.embryoRightCount,
       embryoCR: data.embryoCR.present ? data.embryoCR.value : this.embryoCR,
+      parasiteExamine: data.parasiteExamine.present
+          ? data.parasiteExamine.value
+          : this.parasiteExamine,
+      parasiteDetected: data.parasiteDetected.present
+          ? data.parasiteDetected.value
+          : this.parasiteDetected,
       remark: data.remark.present ? data.remark.value : this.remark,
     );
   }
@@ -9818,6 +9884,8 @@ class MammalMeasurementData extends DataClass
           ..write('embryoLeftCount: $embryoLeftCount, ')
           ..write('embryoRightCount: $embryoRightCount, ')
           ..write('embryoCR: $embryoCR, ')
+          ..write('parasiteExamine: $parasiteExamine, ')
+          ..write('parasiteDetected: $parasiteDetected, ')
           ..write('remark: $remark')
           ..write(')'))
         .toString();
@@ -9860,6 +9928,8 @@ class MammalMeasurementData extends DataClass
         embryoLeftCount,
         embryoRightCount,
         embryoCR,
+        parasiteExamine,
+        parasiteDetected,
         remark
       ]);
   @override
@@ -9901,6 +9971,8 @@ class MammalMeasurementData extends DataClass
           other.embryoLeftCount == this.embryoLeftCount &&
           other.embryoRightCount == this.embryoRightCount &&
           other.embryoCR == this.embryoCR &&
+          other.parasiteExamine == this.parasiteExamine &&
+          other.parasiteDetected == this.parasiteDetected &&
           other.remark == this.remark);
 }
 
@@ -9941,6 +10013,8 @@ class MammalMeasurementCompanion
   final Value<int?> embryoLeftCount;
   final Value<int?> embryoRightCount;
   final Value<int?> embryoCR;
+  final Value<int?> parasiteExamine;
+  final Value<int?> parasiteDetected;
   final Value<String?> remark;
   final Value<int> rowid;
   const MammalMeasurementCompanion({
@@ -9979,6 +10053,8 @@ class MammalMeasurementCompanion
     this.embryoLeftCount = const Value.absent(),
     this.embryoRightCount = const Value.absent(),
     this.embryoCR = const Value.absent(),
+    this.parasiteExamine = const Value.absent(),
+    this.parasiteDetected = const Value.absent(),
     this.remark = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -10018,6 +10094,8 @@ class MammalMeasurementCompanion
     this.embryoLeftCount = const Value.absent(),
     this.embryoRightCount = const Value.absent(),
     this.embryoCR = const Value.absent(),
+    this.parasiteExamine = const Value.absent(),
+    this.parasiteDetected = const Value.absent(),
     this.remark = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : specimenUuid = Value(specimenUuid);
@@ -10057,6 +10135,8 @@ class MammalMeasurementCompanion
     Expression<int>? embryoLeftCount,
     Expression<int>? embryoRightCount,
     Expression<int>? embryoCR,
+    Expression<int>? parasiteExamine,
+    Expression<int>? parasiteDetected,
     Expression<String>? remark,
     Expression<int>? rowid,
   }) {
@@ -10102,6 +10182,8 @@ class MammalMeasurementCompanion
       if (embryoLeftCount != null) 'embryoLeftCount': embryoLeftCount,
       if (embryoRightCount != null) 'embryoRightCount': embryoRightCount,
       if (embryoCR != null) 'embryoCR': embryoCR,
+      if (parasiteExamine != null) 'parasiteExamine': parasiteExamine,
+      if (parasiteDetected != null) 'parasiteDetected': parasiteDetected,
       if (remark != null) 'remark': remark,
       if (rowid != null) 'rowid': rowid,
     });
@@ -10143,6 +10225,8 @@ class MammalMeasurementCompanion
       Value<int?>? embryoLeftCount,
       Value<int?>? embryoRightCount,
       Value<int?>? embryoCR,
+      Value<int?>? parasiteExamine,
+      Value<int?>? parasiteDetected,
       Value<String?>? remark,
       Value<int>? rowid}) {
     return MammalMeasurementCompanion(
@@ -10181,6 +10265,8 @@ class MammalMeasurementCompanion
       embryoLeftCount: embryoLeftCount ?? this.embryoLeftCount,
       embryoRightCount: embryoRightCount ?? this.embryoRightCount,
       embryoCR: embryoCR ?? this.embryoCR,
+      parasiteExamine: parasiteExamine ?? this.parasiteExamine,
+      parasiteDetected: parasiteDetected ?? this.parasiteDetected,
       remark: remark ?? this.remark,
       rowid: rowid ?? this.rowid,
     );
@@ -10295,6 +10381,12 @@ class MammalMeasurementCompanion
     if (embryoCR.present) {
       map['embryoCR'] = Variable<int>(embryoCR.value);
     }
+    if (parasiteExamine.present) {
+      map['parasiteExamine'] = Variable<int>(parasiteExamine.value);
+    }
+    if (parasiteDetected.present) {
+      map['parasiteDetected'] = Variable<int>(parasiteDetected.value);
+    }
     if (remark.present) {
       map['remark'] = Variable<String>(remark.value);
     }
@@ -10342,6 +10434,8 @@ class MammalMeasurementCompanion
           ..write('embryoLeftCount: $embryoLeftCount, ')
           ..write('embryoRightCount: $embryoRightCount, ')
           ..write('embryoCR: $embryoCR, ')
+          ..write('parasiteExamine: $parasiteExamine, ')
+          ..write('parasiteDetected: $parasiteDetected, ')
           ..write('remark: $remark, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -10611,6 +10705,20 @@ class AvianMeasurement extends Table
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       $customConstraints: '');
+  static const VerificationMeta _parasiteExamineMeta =
+      const VerificationMeta('parasiteExamine');
+  late final GeneratedColumn<int> parasiteExamine = GeneratedColumn<int>(
+      'parasiteExamine', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _parasiteDetectedMeta =
+      const VerificationMeta('parasiteDetected');
+  late final GeneratedColumn<int> parasiteDetected = GeneratedColumn<int>(
+      'parasiteDetected', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
   static const VerificationMeta _specimenRemarkMeta =
       const VerificationMeta('specimenRemark');
   late final GeneratedColumn<String> specimenRemark = GeneratedColumn<String>(
@@ -10664,6 +10772,8 @@ class AvianMeasurement extends Table
         tailMolt,
         bodyMolt,
         moltRemark,
+        parasiteExamine,
+        parasiteDetected,
         specimenRemark,
         habitatRemark
       ];
@@ -10872,6 +10982,18 @@ class AvianMeasurement extends Table
           moltRemark.isAcceptableOrUnknown(
               data['moltRemark']!, _moltRemarkMeta));
     }
+    if (data.containsKey('parasiteExamine')) {
+      context.handle(
+          _parasiteExamineMeta,
+          parasiteExamine.isAcceptableOrUnknown(
+              data['parasiteExamine']!, _parasiteExamineMeta));
+    }
+    if (data.containsKey('parasiteDetected')) {
+      context.handle(
+          _parasiteDetectedMeta,
+          parasiteDetected.isAcceptableOrUnknown(
+              data['parasiteDetected']!, _parasiteDetectedMeta));
+    }
     if (data.containsKey('specimenRemark')) {
       context.handle(
           _specimenRemarkMeta,
@@ -10967,6 +11089,10 @@ class AvianMeasurement extends Table
           .read(DriftSqlType.int, data['${effectivePrefix}bodyMolt']),
       moltRemark: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}moltRemark']),
+      parasiteExamine: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}parasiteExamine']),
+      parasiteDetected: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}parasiteDetected']),
       specimenRemark: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}specimenRemark']),
       habitatRemark: attachedDatabase.typeMapping
@@ -11033,6 +11159,8 @@ class AvianMeasurementData extends DataClass
 
   /// encode text
   final String? moltRemark;
+  final int? parasiteExamine;
+  final int? parasiteDetected;
   final String? specimenRemark;
   final String? habitatRemark;
   const AvianMeasurementData(
@@ -11073,6 +11201,8 @@ class AvianMeasurementData extends DataClass
       this.tailMolt,
       this.bodyMolt,
       this.moltRemark,
+      this.parasiteExamine,
+      this.parasiteDetected,
       this.specimenRemark,
       this.habitatRemark});
   @override
@@ -11186,6 +11316,12 @@ class AvianMeasurementData extends DataClass
     }
     if (!nullToAbsent || moltRemark != null) {
       map['moltRemark'] = Variable<String>(moltRemark);
+    }
+    if (!nullToAbsent || parasiteExamine != null) {
+      map['parasiteExamine'] = Variable<int>(parasiteExamine);
+    }
+    if (!nullToAbsent || parasiteDetected != null) {
+      map['parasiteDetected'] = Variable<int>(parasiteDetected);
     }
     if (!nullToAbsent || specimenRemark != null) {
       map['specimenRemark'] = Variable<String>(specimenRemark);
@@ -11302,6 +11438,12 @@ class AvianMeasurementData extends DataClass
       moltRemark: moltRemark == null && nullToAbsent
           ? const Value.absent()
           : Value(moltRemark),
+      parasiteExamine: parasiteExamine == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parasiteExamine),
+      parasiteDetected: parasiteDetected == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parasiteDetected),
       specimenRemark: specimenRemark == null && nullToAbsent
           ? const Value.absent()
           : Value(specimenRemark),
@@ -11352,6 +11494,8 @@ class AvianMeasurementData extends DataClass
       tailMolt: serializer.fromJson<String?>(json['tailMolt']),
       bodyMolt: serializer.fromJson<int?>(json['bodyMolt']),
       moltRemark: serializer.fromJson<String?>(json['moltRemark']),
+      parasiteExamine: serializer.fromJson<int?>(json['parasiteExamine']),
+      parasiteDetected: serializer.fromJson<int?>(json['parasiteDetected']),
       specimenRemark: serializer.fromJson<String?>(json['specimenRemark']),
       habitatRemark: serializer.fromJson<String?>(json['habitatRemark']),
     );
@@ -11397,6 +11541,8 @@ class AvianMeasurementData extends DataClass
       'tailMolt': serializer.toJson<String?>(tailMolt),
       'bodyMolt': serializer.toJson<int?>(bodyMolt),
       'moltRemark': serializer.toJson<String?>(moltRemark),
+      'parasiteExamine': serializer.toJson<int?>(parasiteExamine),
+      'parasiteDetected': serializer.toJson<int?>(parasiteDetected),
       'specimenRemark': serializer.toJson<String?>(specimenRemark),
       'habitatRemark': serializer.toJson<String?>(habitatRemark),
     };
@@ -11440,6 +11586,8 @@ class AvianMeasurementData extends DataClass
           Value<String?> tailMolt = const Value.absent(),
           Value<int?> bodyMolt = const Value.absent(),
           Value<String?> moltRemark = const Value.absent(),
+          Value<int?> parasiteExamine = const Value.absent(),
+          Value<int?> parasiteDetected = const Value.absent(),
           Value<String?> specimenRemark = const Value.absent(),
           Value<String?> habitatRemark = const Value.absent()}) =>
       AvianMeasurementData(
@@ -11493,6 +11641,12 @@ class AvianMeasurementData extends DataClass
         tailMolt: tailMolt.present ? tailMolt.value : this.tailMolt,
         bodyMolt: bodyMolt.present ? bodyMolt.value : this.bodyMolt,
         moltRemark: moltRemark.present ? moltRemark.value : this.moltRemark,
+        parasiteExamine: parasiteExamine.present
+            ? parasiteExamine.value
+            : this.parasiteExamine,
+        parasiteDetected: parasiteDetected.present
+            ? parasiteDetected.value
+            : this.parasiteDetected,
         specimenRemark:
             specimenRemark.present ? specimenRemark.value : this.specimenRemark,
         habitatRemark:
@@ -11570,6 +11724,12 @@ class AvianMeasurementData extends DataClass
       bodyMolt: data.bodyMolt.present ? data.bodyMolt.value : this.bodyMolt,
       moltRemark:
           data.moltRemark.present ? data.moltRemark.value : this.moltRemark,
+      parasiteExamine: data.parasiteExamine.present
+          ? data.parasiteExamine.value
+          : this.parasiteExamine,
+      parasiteDetected: data.parasiteDetected.present
+          ? data.parasiteDetected.value
+          : this.parasiteDetected,
       specimenRemark: data.specimenRemark.present
           ? data.specimenRemark.value
           : this.specimenRemark,
@@ -11619,6 +11779,8 @@ class AvianMeasurementData extends DataClass
           ..write('tailMolt: $tailMolt, ')
           ..write('bodyMolt: $bodyMolt, ')
           ..write('moltRemark: $moltRemark, ')
+          ..write('parasiteExamine: $parasiteExamine, ')
+          ..write('parasiteDetected: $parasiteDetected, ')
           ..write('specimenRemark: $specimenRemark, ')
           ..write('habitatRemark: $habitatRemark')
           ..write(')'))
@@ -11664,6 +11826,8 @@ class AvianMeasurementData extends DataClass
         tailMolt,
         bodyMolt,
         moltRemark,
+        parasiteExamine,
+        parasiteDetected,
         specimenRemark,
         habitatRemark
       ]);
@@ -11708,6 +11872,8 @@ class AvianMeasurementData extends DataClass
           other.tailMolt == this.tailMolt &&
           other.bodyMolt == this.bodyMolt &&
           other.moltRemark == this.moltRemark &&
+          other.parasiteExamine == this.parasiteExamine &&
+          other.parasiteDetected == this.parasiteDetected &&
           other.specimenRemark == this.specimenRemark &&
           other.habitatRemark == this.habitatRemark);
 }
@@ -11750,6 +11916,8 @@ class AvianMeasurementCompanion extends UpdateCompanion<AvianMeasurementData> {
   final Value<String?> tailMolt;
   final Value<int?> bodyMolt;
   final Value<String?> moltRemark;
+  final Value<int?> parasiteExamine;
+  final Value<int?> parasiteDetected;
   final Value<String?> specimenRemark;
   final Value<String?> habitatRemark;
   final Value<int> rowid;
@@ -11791,6 +11959,8 @@ class AvianMeasurementCompanion extends UpdateCompanion<AvianMeasurementData> {
     this.tailMolt = const Value.absent(),
     this.bodyMolt = const Value.absent(),
     this.moltRemark = const Value.absent(),
+    this.parasiteExamine = const Value.absent(),
+    this.parasiteDetected = const Value.absent(),
     this.specimenRemark = const Value.absent(),
     this.habitatRemark = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -11833,6 +12003,8 @@ class AvianMeasurementCompanion extends UpdateCompanion<AvianMeasurementData> {
     this.tailMolt = const Value.absent(),
     this.bodyMolt = const Value.absent(),
     this.moltRemark = const Value.absent(),
+    this.parasiteExamine = const Value.absent(),
+    this.parasiteDetected = const Value.absent(),
     this.specimenRemark = const Value.absent(),
     this.habitatRemark = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -11875,6 +12047,8 @@ class AvianMeasurementCompanion extends UpdateCompanion<AvianMeasurementData> {
     Expression<String>? tailMolt,
     Expression<int>? bodyMolt,
     Expression<String>? moltRemark,
+    Expression<int>? parasiteExamine,
+    Expression<int>? parasiteDetected,
     Expression<String>? specimenRemark,
     Expression<String>? habitatRemark,
     Expression<int>? rowid,
@@ -11917,6 +12091,8 @@ class AvianMeasurementCompanion extends UpdateCompanion<AvianMeasurementData> {
       if (tailMolt != null) 'tailMolt': tailMolt,
       if (bodyMolt != null) 'bodyMolt': bodyMolt,
       if (moltRemark != null) 'moltRemark': moltRemark,
+      if (parasiteExamine != null) 'parasiteExamine': parasiteExamine,
+      if (parasiteDetected != null) 'parasiteDetected': parasiteDetected,
       if (specimenRemark != null) 'specimenRemark': specimenRemark,
       if (habitatRemark != null) 'habitatRemark': habitatRemark,
       if (rowid != null) 'rowid': rowid,
@@ -11961,6 +12137,8 @@ class AvianMeasurementCompanion extends UpdateCompanion<AvianMeasurementData> {
       Value<String?>? tailMolt,
       Value<int?>? bodyMolt,
       Value<String?>? moltRemark,
+      Value<int?>? parasiteExamine,
+      Value<int?>? parasiteDetected,
       Value<String?>? specimenRemark,
       Value<String?>? habitatRemark,
       Value<int>? rowid}) {
@@ -12002,6 +12180,8 @@ class AvianMeasurementCompanion extends UpdateCompanion<AvianMeasurementData> {
       tailMolt: tailMolt ?? this.tailMolt,
       bodyMolt: bodyMolt ?? this.bodyMolt,
       moltRemark: moltRemark ?? this.moltRemark,
+      parasiteExamine: parasiteExamine ?? this.parasiteExamine,
+      parasiteDetected: parasiteDetected ?? this.parasiteDetected,
       specimenRemark: specimenRemark ?? this.specimenRemark,
       habitatRemark: habitatRemark ?? this.habitatRemark,
       rowid: rowid ?? this.rowid,
@@ -12122,6 +12302,12 @@ class AvianMeasurementCompanion extends UpdateCompanion<AvianMeasurementData> {
     if (moltRemark.present) {
       map['moltRemark'] = Variable<String>(moltRemark.value);
     }
+    if (parasiteExamine.present) {
+      map['parasiteExamine'] = Variable<int>(parasiteExamine.value);
+    }
+    if (parasiteDetected.present) {
+      map['parasiteDetected'] = Variable<int>(parasiteDetected.value);
+    }
     if (specimenRemark.present) {
       map['specimenRemark'] = Variable<String>(specimenRemark.value);
     }
@@ -12174,6 +12360,8 @@ class AvianMeasurementCompanion extends UpdateCompanion<AvianMeasurementData> {
           ..write('tailMolt: $tailMolt, ')
           ..write('bodyMolt: $bodyMolt, ')
           ..write('moltRemark: $moltRemark, ')
+          ..write('parasiteExamine: $parasiteExamine, ')
+          ..write('parasiteDetected: $parasiteDetected, ')
           ..write('specimenRemark: $specimenRemark, ')
           ..write('habitatRemark: $habitatRemark, ')
           ..write('rowid: $rowid')
@@ -12219,6 +12407,20 @@ class HerpMeasurement extends Table
       type: DriftSqlType.double,
       requiredDuringInsert: false,
       $customConstraints: '');
+  static const VerificationMeta _parasiteExamineMeta =
+      const VerificationMeta('parasiteExamine');
+  late final GeneratedColumn<int> parasiteExamine = GeneratedColumn<int>(
+      'parasiteExamine', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _parasiteDetectedMeta =
+      const VerificationMeta('parasiteDetected');
+  late final GeneratedColumn<int> parasiteDetected = GeneratedColumn<int>(
+      'parasiteDetected', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
   static const VerificationMeta _remarkMeta = const VerificationMeta('remark');
   late final GeneratedColumn<String> remark = GeneratedColumn<String>(
       'remark', aliasedName, true,
@@ -12226,8 +12428,16 @@ class HerpMeasurement extends Table
       requiredDuringInsert: false,
       $customConstraints: '');
   @override
-  List<GeneratedColumn> get $columns =>
-      [specimenUuid, sex, age, weight, svl, remark];
+  List<GeneratedColumn> get $columns => [
+        specimenUuid,
+        sex,
+        age,
+        weight,
+        svl,
+        parasiteExamine,
+        parasiteDetected,
+        remark
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -12263,6 +12473,18 @@ class HerpMeasurement extends Table
       context.handle(
           _svlMeta, svl.isAcceptableOrUnknown(data['svl']!, _svlMeta));
     }
+    if (data.containsKey('parasiteExamine')) {
+      context.handle(
+          _parasiteExamineMeta,
+          parasiteExamine.isAcceptableOrUnknown(
+              data['parasiteExamine']!, _parasiteExamineMeta));
+    }
+    if (data.containsKey('parasiteDetected')) {
+      context.handle(
+          _parasiteDetectedMeta,
+          parasiteDetected.isAcceptableOrUnknown(
+              data['parasiteDetected']!, _parasiteDetectedMeta));
+    }
     if (data.containsKey('remark')) {
       context.handle(_remarkMeta,
           remark.isAcceptableOrUnknown(data['remark']!, _remarkMeta));
@@ -12286,6 +12508,10 @@ class HerpMeasurement extends Table
           .read(DriftSqlType.double, data['${effectivePrefix}weight']),
       svl: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}svl']),
+      parasiteExamine: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}parasiteExamine']),
+      parasiteDetected: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}parasiteDetected']),
       remark: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}remark']),
     );
@@ -12310,6 +12536,8 @@ class HerpMeasurementData extends DataClass
   final int? age;
   final double? weight;
   final double? svl;
+  final int? parasiteExamine;
+  final int? parasiteDetected;
   final String? remark;
   const HerpMeasurementData(
       {required this.specimenUuid,
@@ -12317,6 +12545,8 @@ class HerpMeasurementData extends DataClass
       this.age,
       this.weight,
       this.svl,
+      this.parasiteExamine,
+      this.parasiteDetected,
       this.remark});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -12334,6 +12564,12 @@ class HerpMeasurementData extends DataClass
     if (!nullToAbsent || svl != null) {
       map['svl'] = Variable<double>(svl);
     }
+    if (!nullToAbsent || parasiteExamine != null) {
+      map['parasiteExamine'] = Variable<int>(parasiteExamine);
+    }
+    if (!nullToAbsent || parasiteDetected != null) {
+      map['parasiteDetected'] = Variable<int>(parasiteDetected);
+    }
     if (!nullToAbsent || remark != null) {
       map['remark'] = Variable<String>(remark);
     }
@@ -12348,6 +12584,12 @@ class HerpMeasurementData extends DataClass
       weight:
           weight == null && nullToAbsent ? const Value.absent() : Value(weight),
       svl: svl == null && nullToAbsent ? const Value.absent() : Value(svl),
+      parasiteExamine: parasiteExamine == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parasiteExamine),
+      parasiteDetected: parasiteDetected == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parasiteDetected),
       remark:
           remark == null && nullToAbsent ? const Value.absent() : Value(remark),
     );
@@ -12362,6 +12604,8 @@ class HerpMeasurementData extends DataClass
       age: serializer.fromJson<int?>(json['age']),
       weight: serializer.fromJson<double?>(json['weight']),
       svl: serializer.fromJson<double?>(json['svl']),
+      parasiteExamine: serializer.fromJson<int?>(json['parasiteExamine']),
+      parasiteDetected: serializer.fromJson<int?>(json['parasiteDetected']),
       remark: serializer.fromJson<String?>(json['remark']),
     );
   }
@@ -12374,6 +12618,8 @@ class HerpMeasurementData extends DataClass
       'age': serializer.toJson<int?>(age),
       'weight': serializer.toJson<double?>(weight),
       'svl': serializer.toJson<double?>(svl),
+      'parasiteExamine': serializer.toJson<int?>(parasiteExamine),
+      'parasiteDetected': serializer.toJson<int?>(parasiteDetected),
       'remark': serializer.toJson<String?>(remark),
     };
   }
@@ -12384,6 +12630,8 @@ class HerpMeasurementData extends DataClass
           Value<int?> age = const Value.absent(),
           Value<double?> weight = const Value.absent(),
           Value<double?> svl = const Value.absent(),
+          Value<int?> parasiteExamine = const Value.absent(),
+          Value<int?> parasiteDetected = const Value.absent(),
           Value<String?> remark = const Value.absent()}) =>
       HerpMeasurementData(
         specimenUuid: specimenUuid ?? this.specimenUuid,
@@ -12391,6 +12639,12 @@ class HerpMeasurementData extends DataClass
         age: age.present ? age.value : this.age,
         weight: weight.present ? weight.value : this.weight,
         svl: svl.present ? svl.value : this.svl,
+        parasiteExamine: parasiteExamine.present
+            ? parasiteExamine.value
+            : this.parasiteExamine,
+        parasiteDetected: parasiteDetected.present
+            ? parasiteDetected.value
+            : this.parasiteDetected,
         remark: remark.present ? remark.value : this.remark,
       );
   HerpMeasurementData copyWithCompanion(HerpMeasurementCompanion data) {
@@ -12402,6 +12656,12 @@ class HerpMeasurementData extends DataClass
       age: data.age.present ? data.age.value : this.age,
       weight: data.weight.present ? data.weight.value : this.weight,
       svl: data.svl.present ? data.svl.value : this.svl,
+      parasiteExamine: data.parasiteExamine.present
+          ? data.parasiteExamine.value
+          : this.parasiteExamine,
+      parasiteDetected: data.parasiteDetected.present
+          ? data.parasiteDetected.value
+          : this.parasiteDetected,
       remark: data.remark.present ? data.remark.value : this.remark,
     );
   }
@@ -12414,13 +12674,16 @@ class HerpMeasurementData extends DataClass
           ..write('age: $age, ')
           ..write('weight: $weight, ')
           ..write('svl: $svl, ')
+          ..write('parasiteExamine: $parasiteExamine, ')
+          ..write('parasiteDetected: $parasiteDetected, ')
           ..write('remark: $remark')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(specimenUuid, sex, age, weight, svl, remark);
+  int get hashCode => Object.hash(specimenUuid, sex, age, weight, svl,
+      parasiteExamine, parasiteDetected, remark);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -12430,6 +12693,8 @@ class HerpMeasurementData extends DataClass
           other.age == this.age &&
           other.weight == this.weight &&
           other.svl == this.svl &&
+          other.parasiteExamine == this.parasiteExamine &&
+          other.parasiteDetected == this.parasiteDetected &&
           other.remark == this.remark);
 }
 
@@ -12439,6 +12704,8 @@ class HerpMeasurementCompanion extends UpdateCompanion<HerpMeasurementData> {
   final Value<int?> age;
   final Value<double?> weight;
   final Value<double?> svl;
+  final Value<int?> parasiteExamine;
+  final Value<int?> parasiteDetected;
   final Value<String?> remark;
   final Value<int> rowid;
   const HerpMeasurementCompanion({
@@ -12447,6 +12714,8 @@ class HerpMeasurementCompanion extends UpdateCompanion<HerpMeasurementData> {
     this.age = const Value.absent(),
     this.weight = const Value.absent(),
     this.svl = const Value.absent(),
+    this.parasiteExamine = const Value.absent(),
+    this.parasiteDetected = const Value.absent(),
     this.remark = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -12456,6 +12725,8 @@ class HerpMeasurementCompanion extends UpdateCompanion<HerpMeasurementData> {
     this.age = const Value.absent(),
     this.weight = const Value.absent(),
     this.svl = const Value.absent(),
+    this.parasiteExamine = const Value.absent(),
+    this.parasiteDetected = const Value.absent(),
     this.remark = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : specimenUuid = Value(specimenUuid);
@@ -12465,6 +12736,8 @@ class HerpMeasurementCompanion extends UpdateCompanion<HerpMeasurementData> {
     Expression<int>? age,
     Expression<double>? weight,
     Expression<double>? svl,
+    Expression<int>? parasiteExamine,
+    Expression<int>? parasiteDetected,
     Expression<String>? remark,
     Expression<int>? rowid,
   }) {
@@ -12474,6 +12747,8 @@ class HerpMeasurementCompanion extends UpdateCompanion<HerpMeasurementData> {
       if (age != null) 'age': age,
       if (weight != null) 'weight': weight,
       if (svl != null) 'svl': svl,
+      if (parasiteExamine != null) 'parasiteExamine': parasiteExamine,
+      if (parasiteDetected != null) 'parasiteDetected': parasiteDetected,
       if (remark != null) 'remark': remark,
       if (rowid != null) 'rowid': rowid,
     });
@@ -12485,6 +12760,8 @@ class HerpMeasurementCompanion extends UpdateCompanion<HerpMeasurementData> {
       Value<int?>? age,
       Value<double?>? weight,
       Value<double?>? svl,
+      Value<int?>? parasiteExamine,
+      Value<int?>? parasiteDetected,
       Value<String?>? remark,
       Value<int>? rowid}) {
     return HerpMeasurementCompanion(
@@ -12493,6 +12770,8 @@ class HerpMeasurementCompanion extends UpdateCompanion<HerpMeasurementData> {
       age: age ?? this.age,
       weight: weight ?? this.weight,
       svl: svl ?? this.svl,
+      parasiteExamine: parasiteExamine ?? this.parasiteExamine,
+      parasiteDetected: parasiteDetected ?? this.parasiteDetected,
       remark: remark ?? this.remark,
       rowid: rowid ?? this.rowid,
     );
@@ -12516,6 +12795,12 @@ class HerpMeasurementCompanion extends UpdateCompanion<HerpMeasurementData> {
     if (svl.present) {
       map['svl'] = Variable<double>(svl.value);
     }
+    if (parasiteExamine.present) {
+      map['parasiteExamine'] = Variable<int>(parasiteExamine.value);
+    }
+    if (parasiteDetected.present) {
+      map['parasiteDetected'] = Variable<int>(parasiteDetected.value);
+    }
     if (remark.present) {
       map['remark'] = Variable<String>(remark.value);
     }
@@ -12533,6 +12818,8 @@ class HerpMeasurementCompanion extends UpdateCompanion<HerpMeasurementData> {
           ..write('age: $age, ')
           ..write('weight: $weight, ')
           ..write('svl: $svl, ')
+          ..write('parasiteExamine: $parasiteExamine, ')
+          ..write('parasiteDetected: $parasiteDetected, ')
           ..write('remark: $remark, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -13294,6 +13581,657 @@ class SpecimenPartCompanion extends UpdateCompanion<SpecimenPartData> {
   }
 }
 
+class Parasite extends Table with TableInfo<Parasite, ParasiteData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  Parasite(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _parasiteUuidMeta =
+      const VerificationMeta('parasiteUuid');
+  late final GeneratedColumn<String> parasiteUuid = GeneratedColumn<String>(
+      'parasiteUuid', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'PRIMARY KEY');
+  static const VerificationMeta _specimenUuidMeta =
+      const VerificationMeta('specimenUuid');
+  late final GeneratedColumn<String> specimenUuid = GeneratedColumn<String>(
+      'specimenUuid', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _personnelIdMeta =
+      const VerificationMeta('personnelId');
+  late final GeneratedColumn<String> personnelId = GeneratedColumn<String>(
+      'personnelId', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _speciesIDMeta =
+      const VerificationMeta('speciesID');
+  late final GeneratedColumn<int> speciesID = GeneratedColumn<int>(
+      'speciesID', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _treatmentMeta =
+      const VerificationMeta('treatment');
+  late final GeneratedColumn<String> treatment = GeneratedColumn<String>(
+      'treatment', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _sexMeta = const VerificationMeta('sex');
+  late final GeneratedColumn<int> sex = GeneratedColumn<int>(
+      'sex', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _lifeStageMeta =
+      const VerificationMeta('lifeStage');
+  late final GeneratedColumn<String> lifeStage = GeneratedColumn<String>(
+      'lifeStage', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _lifeStageDetailMeta =
+      const VerificationMeta('lifeStageDetail');
+  late final GeneratedColumn<String> lifeStageDetail = GeneratedColumn<String>(
+      'lifeStageDetail', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _anatomicalLocationMeta =
+      const VerificationMeta('anatomicalLocation');
+  late final GeneratedColumn<String> anatomicalLocation =
+      GeneratedColumn<String>('anatomicalLocation', aliasedName, true,
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          $customConstraints: '');
+  static const VerificationMeta _parasiteTypeMeta =
+      const VerificationMeta('parasiteType');
+  late final GeneratedColumn<int> parasiteType = GeneratedColumn<int>(
+      'parasiteType', aliasedName, true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      $customConstraints: '');
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  late final GeneratedColumn<String> createdAt = GeneratedColumn<String>(
+      'createdAt', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT CURRENT_TIMESTAMP',
+      defaultValue: const CustomExpression('CURRENT_TIMESTAMP'));
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  late final GeneratedColumn<String> updatedAt = GeneratedColumn<String>(
+      'updatedAt', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: 'NOT NULL DEFAULT CURRENT_TIMESTAMP',
+      defaultValue: const CustomExpression('CURRENT_TIMESTAMP'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        parasiteUuid,
+        specimenUuid,
+        personnelId,
+        speciesID,
+        treatment,
+        sex,
+        lifeStage,
+        lifeStageDetail,
+        anatomicalLocation,
+        parasiteType,
+        createdAt,
+        updatedAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'parasite';
+  @override
+  VerificationContext validateIntegrity(Insertable<ParasiteData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('parasiteUuid')) {
+      context.handle(
+          _parasiteUuidMeta,
+          parasiteUuid.isAcceptableOrUnknown(
+              data['parasiteUuid']!, _parasiteUuidMeta));
+    }
+    if (data.containsKey('specimenUuid')) {
+      context.handle(
+          _specimenUuidMeta,
+          specimenUuid.isAcceptableOrUnknown(
+              data['specimenUuid']!, _specimenUuidMeta));
+    }
+    if (data.containsKey('personnelId')) {
+      context.handle(
+          _personnelIdMeta,
+          personnelId.isAcceptableOrUnknown(
+              data['personnelId']!, _personnelIdMeta));
+    }
+    if (data.containsKey('speciesID')) {
+      context.handle(_speciesIDMeta,
+          speciesID.isAcceptableOrUnknown(data['speciesID']!, _speciesIDMeta));
+    }
+    if (data.containsKey('treatment')) {
+      context.handle(_treatmentMeta,
+          treatment.isAcceptableOrUnknown(data['treatment']!, _treatmentMeta));
+    }
+    if (data.containsKey('sex')) {
+      context.handle(
+          _sexMeta, sex.isAcceptableOrUnknown(data['sex']!, _sexMeta));
+    }
+    if (data.containsKey('lifeStage')) {
+      context.handle(_lifeStageMeta,
+          lifeStage.isAcceptableOrUnknown(data['lifeStage']!, _lifeStageMeta));
+    }
+    if (data.containsKey('lifeStageDetail')) {
+      context.handle(
+          _lifeStageDetailMeta,
+          lifeStageDetail.isAcceptableOrUnknown(
+              data['lifeStageDetail']!, _lifeStageDetailMeta));
+    }
+    if (data.containsKey('anatomicalLocation')) {
+      context.handle(
+          _anatomicalLocationMeta,
+          anatomicalLocation.isAcceptableOrUnknown(
+              data['anatomicalLocation']!, _anatomicalLocationMeta));
+    }
+    if (data.containsKey('parasiteType')) {
+      context.handle(
+          _parasiteTypeMeta,
+          parasiteType.isAcceptableOrUnknown(
+              data['parasiteType']!, _parasiteTypeMeta));
+    }
+    if (data.containsKey('createdAt')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['createdAt']!, _createdAtMeta));
+    }
+    if (data.containsKey('updatedAt')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updatedAt']!, _updatedAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {parasiteUuid};
+  @override
+  ParasiteData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ParasiteData(
+      parasiteUuid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}parasiteUuid']),
+      specimenUuid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}specimenUuid']),
+      personnelId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}personnelId']),
+      speciesID: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}speciesID']),
+      treatment: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}treatment']),
+      sex: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sex']),
+      lifeStage: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}lifeStage']),
+      lifeStageDetail: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}lifeStageDetail']),
+      anatomicalLocation: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}anatomicalLocation']),
+      parasiteType: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}parasiteType']),
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}createdAt'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}updatedAt'])!,
+    );
+  }
+
+  @override
+  Parasite createAlias(String alias) {
+    return Parasite(attachedDatabase, alias);
+  }
+
+  @override
+  List<String> get customConstraints => const [
+        'FOREIGN KEY(speciesID)REFERENCES taxonomy(id)',
+        'FOREIGN KEY(specimenUuid)REFERENCES specimen(uuid)',
+        'FOREIGN KEY(personnelId)REFERENCES personnel(uuid)'
+      ];
+  @override
+  bool get dontWriteConstraints => true;
+}
+
+class ParasiteData extends DataClass implements Insertable<ParasiteData> {
+  final String? parasiteUuid;
+  final String? specimenUuid;
+  final String? personnelId;
+  final int? speciesID;
+  final String? treatment;
+  final int? sex;
+  final String? lifeStage;
+  final String? lifeStageDetail;
+  final String? anatomicalLocation;
+  final int? parasiteType;
+
+  /// 0 endoparasite and 1 ectoparasite
+  final String createdAt;
+  final String updatedAt;
+  const ParasiteData(
+      {this.parasiteUuid,
+      this.specimenUuid,
+      this.personnelId,
+      this.speciesID,
+      this.treatment,
+      this.sex,
+      this.lifeStage,
+      this.lifeStageDetail,
+      this.anatomicalLocation,
+      this.parasiteType,
+      required this.createdAt,
+      required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || parasiteUuid != null) {
+      map['parasiteUuid'] = Variable<String>(parasiteUuid);
+    }
+    if (!nullToAbsent || specimenUuid != null) {
+      map['specimenUuid'] = Variable<String>(specimenUuid);
+    }
+    if (!nullToAbsent || personnelId != null) {
+      map['personnelId'] = Variable<String>(personnelId);
+    }
+    if (!nullToAbsent || speciesID != null) {
+      map['speciesID'] = Variable<int>(speciesID);
+    }
+    if (!nullToAbsent || treatment != null) {
+      map['treatment'] = Variable<String>(treatment);
+    }
+    if (!nullToAbsent || sex != null) {
+      map['sex'] = Variable<int>(sex);
+    }
+    if (!nullToAbsent || lifeStage != null) {
+      map['lifeStage'] = Variable<String>(lifeStage);
+    }
+    if (!nullToAbsent || lifeStageDetail != null) {
+      map['lifeStageDetail'] = Variable<String>(lifeStageDetail);
+    }
+    if (!nullToAbsent || anatomicalLocation != null) {
+      map['anatomicalLocation'] = Variable<String>(anatomicalLocation);
+    }
+    if (!nullToAbsent || parasiteType != null) {
+      map['parasiteType'] = Variable<int>(parasiteType);
+    }
+    map['createdAt'] = Variable<String>(createdAt);
+    map['updatedAt'] = Variable<String>(updatedAt);
+    return map;
+  }
+
+  ParasiteCompanion toCompanion(bool nullToAbsent) {
+    return ParasiteCompanion(
+      parasiteUuid: parasiteUuid == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parasiteUuid),
+      specimenUuid: specimenUuid == null && nullToAbsent
+          ? const Value.absent()
+          : Value(specimenUuid),
+      personnelId: personnelId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(personnelId),
+      speciesID: speciesID == null && nullToAbsent
+          ? const Value.absent()
+          : Value(speciesID),
+      treatment: treatment == null && nullToAbsent
+          ? const Value.absent()
+          : Value(treatment),
+      sex: sex == null && nullToAbsent ? const Value.absent() : Value(sex),
+      lifeStage: lifeStage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lifeStage),
+      lifeStageDetail: lifeStageDetail == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lifeStageDetail),
+      anatomicalLocation: anatomicalLocation == null && nullToAbsent
+          ? const Value.absent()
+          : Value(anatomicalLocation),
+      parasiteType: parasiteType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parasiteType),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory ParasiteData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ParasiteData(
+      parasiteUuid: serializer.fromJson<String?>(json['parasiteUuid']),
+      specimenUuid: serializer.fromJson<String?>(json['specimenUuid']),
+      personnelId: serializer.fromJson<String?>(json['personnelId']),
+      speciesID: serializer.fromJson<int?>(json['speciesID']),
+      treatment: serializer.fromJson<String?>(json['treatment']),
+      sex: serializer.fromJson<int?>(json['sex']),
+      lifeStage: serializer.fromJson<String?>(json['lifeStage']),
+      lifeStageDetail: serializer.fromJson<String?>(json['lifeStageDetail']),
+      anatomicalLocation:
+          serializer.fromJson<String?>(json['anatomicalLocation']),
+      parasiteType: serializer.fromJson<int?>(json['parasiteType']),
+      createdAt: serializer.fromJson<String>(json['createdAt']),
+      updatedAt: serializer.fromJson<String>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'parasiteUuid': serializer.toJson<String?>(parasiteUuid),
+      'specimenUuid': serializer.toJson<String?>(specimenUuid),
+      'personnelId': serializer.toJson<String?>(personnelId),
+      'speciesID': serializer.toJson<int?>(speciesID),
+      'treatment': serializer.toJson<String?>(treatment),
+      'sex': serializer.toJson<int?>(sex),
+      'lifeStage': serializer.toJson<String?>(lifeStage),
+      'lifeStageDetail': serializer.toJson<String?>(lifeStageDetail),
+      'anatomicalLocation': serializer.toJson<String?>(anatomicalLocation),
+      'parasiteType': serializer.toJson<int?>(parasiteType),
+      'createdAt': serializer.toJson<String>(createdAt),
+      'updatedAt': serializer.toJson<String>(updatedAt),
+    };
+  }
+
+  ParasiteData copyWith(
+          {Value<String?> parasiteUuid = const Value.absent(),
+          Value<String?> specimenUuid = const Value.absent(),
+          Value<String?> personnelId = const Value.absent(),
+          Value<int?> speciesID = const Value.absent(),
+          Value<String?> treatment = const Value.absent(),
+          Value<int?> sex = const Value.absent(),
+          Value<String?> lifeStage = const Value.absent(),
+          Value<String?> lifeStageDetail = const Value.absent(),
+          Value<String?> anatomicalLocation = const Value.absent(),
+          Value<int?> parasiteType = const Value.absent(),
+          String? createdAt,
+          String? updatedAt}) =>
+      ParasiteData(
+        parasiteUuid:
+            parasiteUuid.present ? parasiteUuid.value : this.parasiteUuid,
+        specimenUuid:
+            specimenUuid.present ? specimenUuid.value : this.specimenUuid,
+        personnelId: personnelId.present ? personnelId.value : this.personnelId,
+        speciesID: speciesID.present ? speciesID.value : this.speciesID,
+        treatment: treatment.present ? treatment.value : this.treatment,
+        sex: sex.present ? sex.value : this.sex,
+        lifeStage: lifeStage.present ? lifeStage.value : this.lifeStage,
+        lifeStageDetail: lifeStageDetail.present
+            ? lifeStageDetail.value
+            : this.lifeStageDetail,
+        anatomicalLocation: anatomicalLocation.present
+            ? anatomicalLocation.value
+            : this.anatomicalLocation,
+        parasiteType:
+            parasiteType.present ? parasiteType.value : this.parasiteType,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+  ParasiteData copyWithCompanion(ParasiteCompanion data) {
+    return ParasiteData(
+      parasiteUuid: data.parasiteUuid.present
+          ? data.parasiteUuid.value
+          : this.parasiteUuid,
+      specimenUuid: data.specimenUuid.present
+          ? data.specimenUuid.value
+          : this.specimenUuid,
+      personnelId:
+          data.personnelId.present ? data.personnelId.value : this.personnelId,
+      speciesID: data.speciesID.present ? data.speciesID.value : this.speciesID,
+      treatment: data.treatment.present ? data.treatment.value : this.treatment,
+      sex: data.sex.present ? data.sex.value : this.sex,
+      lifeStage: data.lifeStage.present ? data.lifeStage.value : this.lifeStage,
+      lifeStageDetail: data.lifeStageDetail.present
+          ? data.lifeStageDetail.value
+          : this.lifeStageDetail,
+      anatomicalLocation: data.anatomicalLocation.present
+          ? data.anatomicalLocation.value
+          : this.anatomicalLocation,
+      parasiteType: data.parasiteType.present
+          ? data.parasiteType.value
+          : this.parasiteType,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ParasiteData(')
+          ..write('parasiteUuid: $parasiteUuid, ')
+          ..write('specimenUuid: $specimenUuid, ')
+          ..write('personnelId: $personnelId, ')
+          ..write('speciesID: $speciesID, ')
+          ..write('treatment: $treatment, ')
+          ..write('sex: $sex, ')
+          ..write('lifeStage: $lifeStage, ')
+          ..write('lifeStageDetail: $lifeStageDetail, ')
+          ..write('anatomicalLocation: $anatomicalLocation, ')
+          ..write('parasiteType: $parasiteType, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      parasiteUuid,
+      specimenUuid,
+      personnelId,
+      speciesID,
+      treatment,
+      sex,
+      lifeStage,
+      lifeStageDetail,
+      anatomicalLocation,
+      parasiteType,
+      createdAt,
+      updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ParasiteData &&
+          other.parasiteUuid == this.parasiteUuid &&
+          other.specimenUuid == this.specimenUuid &&
+          other.personnelId == this.personnelId &&
+          other.speciesID == this.speciesID &&
+          other.treatment == this.treatment &&
+          other.sex == this.sex &&
+          other.lifeStage == this.lifeStage &&
+          other.lifeStageDetail == this.lifeStageDetail &&
+          other.anatomicalLocation == this.anatomicalLocation &&
+          other.parasiteType == this.parasiteType &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class ParasiteCompanion extends UpdateCompanion<ParasiteData> {
+  final Value<String?> parasiteUuid;
+  final Value<String?> specimenUuid;
+  final Value<String?> personnelId;
+  final Value<int?> speciesID;
+  final Value<String?> treatment;
+  final Value<int?> sex;
+  final Value<String?> lifeStage;
+  final Value<String?> lifeStageDetail;
+  final Value<String?> anatomicalLocation;
+  final Value<int?> parasiteType;
+  final Value<String> createdAt;
+  final Value<String> updatedAt;
+  final Value<int> rowid;
+  const ParasiteCompanion({
+    this.parasiteUuid = const Value.absent(),
+    this.specimenUuid = const Value.absent(),
+    this.personnelId = const Value.absent(),
+    this.speciesID = const Value.absent(),
+    this.treatment = const Value.absent(),
+    this.sex = const Value.absent(),
+    this.lifeStage = const Value.absent(),
+    this.lifeStageDetail = const Value.absent(),
+    this.anatomicalLocation = const Value.absent(),
+    this.parasiteType = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ParasiteCompanion.insert({
+    this.parasiteUuid = const Value.absent(),
+    this.specimenUuid = const Value.absent(),
+    this.personnelId = const Value.absent(),
+    this.speciesID = const Value.absent(),
+    this.treatment = const Value.absent(),
+    this.sex = const Value.absent(),
+    this.lifeStage = const Value.absent(),
+    this.lifeStageDetail = const Value.absent(),
+    this.anatomicalLocation = const Value.absent(),
+    this.parasiteType = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<ParasiteData> custom({
+    Expression<String>? parasiteUuid,
+    Expression<String>? specimenUuid,
+    Expression<String>? personnelId,
+    Expression<int>? speciesID,
+    Expression<String>? treatment,
+    Expression<int>? sex,
+    Expression<String>? lifeStage,
+    Expression<String>? lifeStageDetail,
+    Expression<String>? anatomicalLocation,
+    Expression<int>? parasiteType,
+    Expression<String>? createdAt,
+    Expression<String>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (parasiteUuid != null) 'parasiteUuid': parasiteUuid,
+      if (specimenUuid != null) 'specimenUuid': specimenUuid,
+      if (personnelId != null) 'personnelId': personnelId,
+      if (speciesID != null) 'speciesID': speciesID,
+      if (treatment != null) 'treatment': treatment,
+      if (sex != null) 'sex': sex,
+      if (lifeStage != null) 'lifeStage': lifeStage,
+      if (lifeStageDetail != null) 'lifeStageDetail': lifeStageDetail,
+      if (anatomicalLocation != null) 'anatomicalLocation': anatomicalLocation,
+      if (parasiteType != null) 'parasiteType': parasiteType,
+      if (createdAt != null) 'createdAt': createdAt,
+      if (updatedAt != null) 'updatedAt': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ParasiteCompanion copyWith(
+      {Value<String?>? parasiteUuid,
+      Value<String?>? specimenUuid,
+      Value<String?>? personnelId,
+      Value<int?>? speciesID,
+      Value<String?>? treatment,
+      Value<int?>? sex,
+      Value<String?>? lifeStage,
+      Value<String?>? lifeStageDetail,
+      Value<String?>? anatomicalLocation,
+      Value<int?>? parasiteType,
+      Value<String>? createdAt,
+      Value<String>? updatedAt,
+      Value<int>? rowid}) {
+    return ParasiteCompanion(
+      parasiteUuid: parasiteUuid ?? this.parasiteUuid,
+      specimenUuid: specimenUuid ?? this.specimenUuid,
+      personnelId: personnelId ?? this.personnelId,
+      speciesID: speciesID ?? this.speciesID,
+      treatment: treatment ?? this.treatment,
+      sex: sex ?? this.sex,
+      lifeStage: lifeStage ?? this.lifeStage,
+      lifeStageDetail: lifeStageDetail ?? this.lifeStageDetail,
+      anatomicalLocation: anatomicalLocation ?? this.anatomicalLocation,
+      parasiteType: parasiteType ?? this.parasiteType,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (parasiteUuid.present) {
+      map['parasiteUuid'] = Variable<String>(parasiteUuid.value);
+    }
+    if (specimenUuid.present) {
+      map['specimenUuid'] = Variable<String>(specimenUuid.value);
+    }
+    if (personnelId.present) {
+      map['personnelId'] = Variable<String>(personnelId.value);
+    }
+    if (speciesID.present) {
+      map['speciesID'] = Variable<int>(speciesID.value);
+    }
+    if (treatment.present) {
+      map['treatment'] = Variable<String>(treatment.value);
+    }
+    if (sex.present) {
+      map['sex'] = Variable<int>(sex.value);
+    }
+    if (lifeStage.present) {
+      map['lifeStage'] = Variable<String>(lifeStage.value);
+    }
+    if (lifeStageDetail.present) {
+      map['lifeStageDetail'] = Variable<String>(lifeStageDetail.value);
+    }
+    if (anatomicalLocation.present) {
+      map['anatomicalLocation'] = Variable<String>(anatomicalLocation.value);
+    }
+    if (parasiteType.present) {
+      map['parasiteType'] = Variable<int>(parasiteType.value);
+    }
+    if (createdAt.present) {
+      map['createdAt'] = Variable<String>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updatedAt'] = Variable<String>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ParasiteCompanion(')
+          ..write('parasiteUuid: $parasiteUuid, ')
+          ..write('specimenUuid: $specimenUuid, ')
+          ..write('personnelId: $personnelId, ')
+          ..write('speciesID: $speciesID, ')
+          ..write('treatment: $treatment, ')
+          ..write('sex: $sex, ')
+          ..write('lifeStage: $lifeStage, ')
+          ..write('lifeStageDetail: $lifeStageDetail, ')
+          ..write('anatomicalLocation: $anatomicalLocation, ')
+          ..write('parasiteType: $parasiteType, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(e);
   $DatabaseManager get managers => $DatabaseManager(this);
@@ -13318,6 +14256,7 @@ abstract class _$Database extends GeneratedDatabase {
   late final AvianMeasurement avianMeasurement = AvianMeasurement(this);
   late final HerpMeasurement herpMeasurement = HerpMeasurement(this);
   late final SpecimenPart specimenPart = SpecimenPart(this);
+  late final Parasite parasite = Parasite(this);
   Selectable<ListProjectResult> listProject() {
     return customSelect('SELECT uuid, name, created, lastAccessed FROM project',
         variables: [],
@@ -13356,7 +14295,8 @@ abstract class _$Database extends GeneratedDatabase {
         mammalMeasurement,
         avianMeasurement,
         herpMeasurement,
-        specimenPart
+        specimenPart,
+        parasite
       ];
 }
 
@@ -17816,6 +18756,8 @@ typedef $MammalMeasurementCreateCompanionBuilder = MammalMeasurementCompanion
   Value<int?> embryoLeftCount,
   Value<int?> embryoRightCount,
   Value<int?> embryoCR,
+  Value<int?> parasiteExamine,
+  Value<int?> parasiteDetected,
   Value<String?> remark,
   Value<int> rowid,
 });
@@ -17856,6 +18798,8 @@ typedef $MammalMeasurementUpdateCompanionBuilder = MammalMeasurementCompanion
   Value<int?> embryoLeftCount,
   Value<int?> embryoRightCount,
   Value<int?> embryoCR,
+  Value<int?> parasiteExamine,
+  Value<int?> parasiteDetected,
   Value<String?> remark,
   Value<int> rowid,
 });
@@ -17989,6 +18933,14 @@ class $MammalMeasurementFilterComposer
 
   ColumnFilters<int> get embryoCR => $composableBuilder(
       column: $table.embryoCR, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get parasiteExamine => $composableBuilder(
+      column: $table.parasiteExamine,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get parasiteDetected => $composableBuilder(
+      column: $table.parasiteDetected,
+      builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get remark => $composableBuilder(
       column: $table.remark, builder: (column) => ColumnFilters(column));
@@ -18131,6 +19083,14 @@ class $MammalMeasurementOrderingComposer
   ColumnOrderings<int> get embryoCR => $composableBuilder(
       column: $table.embryoCR, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<int> get parasiteExamine => $composableBuilder(
+      column: $table.parasiteExamine,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get parasiteDetected => $composableBuilder(
+      column: $table.parasiteDetected,
+      builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<String> get remark => $composableBuilder(
       column: $table.remark, builder: (column) => ColumnOrderings(column));
 }
@@ -18249,6 +19209,12 @@ class $MammalMeasurementAnnotationComposer
   GeneratedColumn<int> get embryoCR =>
       $composableBuilder(column: $table.embryoCR, builder: (column) => column);
 
+  GeneratedColumn<int> get parasiteExamine => $composableBuilder(
+      column: $table.parasiteExamine, builder: (column) => column);
+
+  GeneratedColumn<int> get parasiteDetected => $composableBuilder(
+      column: $table.parasiteDetected, builder: (column) => column);
+
   GeneratedColumn<String> get remark =>
       $composableBuilder(column: $table.remark, builder: (column) => column);
 }
@@ -18314,6 +19280,8 @@ class $MammalMeasurementTableManager extends RootTableManager<
             Value<int?> embryoLeftCount = const Value.absent(),
             Value<int?> embryoRightCount = const Value.absent(),
             Value<int?> embryoCR = const Value.absent(),
+            Value<int?> parasiteExamine = const Value.absent(),
+            Value<int?> parasiteDetected = const Value.absent(),
             Value<String?> remark = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -18353,6 +19321,8 @@ class $MammalMeasurementTableManager extends RootTableManager<
             embryoLeftCount: embryoLeftCount,
             embryoRightCount: embryoRightCount,
             embryoCR: embryoCR,
+            parasiteExamine: parasiteExamine,
+            parasiteDetected: parasiteDetected,
             remark: remark,
             rowid: rowid,
           ),
@@ -18392,6 +19362,8 @@ class $MammalMeasurementTableManager extends RootTableManager<
             Value<int?> embryoLeftCount = const Value.absent(),
             Value<int?> embryoRightCount = const Value.absent(),
             Value<int?> embryoCR = const Value.absent(),
+            Value<int?> parasiteExamine = const Value.absent(),
+            Value<int?> parasiteDetected = const Value.absent(),
             Value<String?> remark = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -18431,6 +19403,8 @@ class $MammalMeasurementTableManager extends RootTableManager<
             embryoLeftCount: embryoLeftCount,
             embryoRightCount: embryoRightCount,
             embryoCR: embryoCR,
+            parasiteExamine: parasiteExamine,
+            parasiteDetected: parasiteDetected,
             remark: remark,
             rowid: rowid,
           ),
@@ -18495,6 +19469,8 @@ typedef $AvianMeasurementCreateCompanionBuilder = AvianMeasurementCompanion
   Value<String?> tailMolt,
   Value<int?> bodyMolt,
   Value<String?> moltRemark,
+  Value<int?> parasiteExamine,
+  Value<int?> parasiteDetected,
   Value<String?> specimenRemark,
   Value<String?> habitatRemark,
   Value<int> rowid,
@@ -18538,6 +19514,8 @@ typedef $AvianMeasurementUpdateCompanionBuilder = AvianMeasurementCompanion
   Value<String?> tailMolt,
   Value<int?> bodyMolt,
   Value<String?> moltRemark,
+  Value<int?> parasiteExamine,
+  Value<int?> parasiteDetected,
   Value<String?> specimenRemark,
   Value<String?> habitatRemark,
   Value<int> rowid,
@@ -18666,6 +19644,14 @@ class $AvianMeasurementFilterComposer
 
   ColumnFilters<String> get moltRemark => $composableBuilder(
       column: $table.moltRemark, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get parasiteExamine => $composableBuilder(
+      column: $table.parasiteExamine,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get parasiteDetected => $composableBuilder(
+      column: $table.parasiteDetected,
+      builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get specimenRemark => $composableBuilder(
       column: $table.specimenRemark,
@@ -18806,6 +19792,14 @@ class $AvianMeasurementOrderingComposer
   ColumnOrderings<String> get moltRemark => $composableBuilder(
       column: $table.moltRemark, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<int> get parasiteExamine => $composableBuilder(
+      column: $table.parasiteExamine,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get parasiteDetected => $composableBuilder(
+      column: $table.parasiteDetected,
+      builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<String> get specimenRemark => $composableBuilder(
       column: $table.specimenRemark,
       builder: (column) => ColumnOrderings(column));
@@ -18935,6 +19929,12 @@ class $AvianMeasurementAnnotationComposer
   GeneratedColumn<String> get moltRemark => $composableBuilder(
       column: $table.moltRemark, builder: (column) => column);
 
+  GeneratedColumn<int> get parasiteExamine => $composableBuilder(
+      column: $table.parasiteExamine, builder: (column) => column);
+
+  GeneratedColumn<int> get parasiteDetected => $composableBuilder(
+      column: $table.parasiteDetected, builder: (column) => column);
+
   GeneratedColumn<String> get specimenRemark => $composableBuilder(
       column: $table.specimenRemark, builder: (column) => column);
 
@@ -19005,6 +20005,8 @@ class $AvianMeasurementTableManager extends RootTableManager<
             Value<String?> tailMolt = const Value.absent(),
             Value<int?> bodyMolt = const Value.absent(),
             Value<String?> moltRemark = const Value.absent(),
+            Value<int?> parasiteExamine = const Value.absent(),
+            Value<int?> parasiteDetected = const Value.absent(),
             Value<String?> specimenRemark = const Value.absent(),
             Value<String?> habitatRemark = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -19047,6 +20049,8 @@ class $AvianMeasurementTableManager extends RootTableManager<
             tailMolt: tailMolt,
             bodyMolt: bodyMolt,
             moltRemark: moltRemark,
+            parasiteExamine: parasiteExamine,
+            parasiteDetected: parasiteDetected,
             specimenRemark: specimenRemark,
             habitatRemark: habitatRemark,
             rowid: rowid,
@@ -19089,6 +20093,8 @@ class $AvianMeasurementTableManager extends RootTableManager<
             Value<String?> tailMolt = const Value.absent(),
             Value<int?> bodyMolt = const Value.absent(),
             Value<String?> moltRemark = const Value.absent(),
+            Value<int?> parasiteExamine = const Value.absent(),
+            Value<int?> parasiteDetected = const Value.absent(),
             Value<String?> specimenRemark = const Value.absent(),
             Value<String?> habitatRemark = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -19131,6 +20137,8 @@ class $AvianMeasurementTableManager extends RootTableManager<
             tailMolt: tailMolt,
             bodyMolt: bodyMolt,
             moltRemark: moltRemark,
+            parasiteExamine: parasiteExamine,
+            parasiteDetected: parasiteDetected,
             specimenRemark: specimenRemark,
             habitatRemark: habitatRemark,
             rowid: rowid,
@@ -19164,6 +20172,8 @@ typedef $HerpMeasurementCreateCompanionBuilder = HerpMeasurementCompanion
   Value<int?> age,
   Value<double?> weight,
   Value<double?> svl,
+  Value<int?> parasiteExamine,
+  Value<int?> parasiteDetected,
   Value<String?> remark,
   Value<int> rowid,
 });
@@ -19174,6 +20184,8 @@ typedef $HerpMeasurementUpdateCompanionBuilder = HerpMeasurementCompanion
   Value<int?> age,
   Value<double?> weight,
   Value<double?> svl,
+  Value<int?> parasiteExamine,
+  Value<int?> parasiteDetected,
   Value<String?> remark,
   Value<int> rowid,
 });
@@ -19201,6 +20213,14 @@ class $HerpMeasurementFilterComposer
 
   ColumnFilters<double> get svl => $composableBuilder(
       column: $table.svl, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get parasiteExamine => $composableBuilder(
+      column: $table.parasiteExamine,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get parasiteDetected => $composableBuilder(
+      column: $table.parasiteDetected,
+      builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get remark => $composableBuilder(
       column: $table.remark, builder: (column) => ColumnFilters(column));
@@ -19231,6 +20251,14 @@ class $HerpMeasurementOrderingComposer
   ColumnOrderings<double> get svl => $composableBuilder(
       column: $table.svl, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<int> get parasiteExamine => $composableBuilder(
+      column: $table.parasiteExamine,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get parasiteDetected => $composableBuilder(
+      column: $table.parasiteDetected,
+      builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<String> get remark => $composableBuilder(
       column: $table.remark, builder: (column) => ColumnOrderings(column));
 }
@@ -19258,6 +20286,12 @@ class $HerpMeasurementAnnotationComposer
 
   GeneratedColumn<double> get svl =>
       $composableBuilder(column: $table.svl, builder: (column) => column);
+
+  GeneratedColumn<int> get parasiteExamine => $composableBuilder(
+      column: $table.parasiteExamine, builder: (column) => column);
+
+  GeneratedColumn<int> get parasiteDetected => $composableBuilder(
+      column: $table.parasiteDetected, builder: (column) => column);
 
   GeneratedColumn<String> get remark =>
       $composableBuilder(column: $table.remark, builder: (column) => column);
@@ -19294,6 +20328,8 @@ class $HerpMeasurementTableManager extends RootTableManager<
             Value<int?> age = const Value.absent(),
             Value<double?> weight = const Value.absent(),
             Value<double?> svl = const Value.absent(),
+            Value<int?> parasiteExamine = const Value.absent(),
+            Value<int?> parasiteDetected = const Value.absent(),
             Value<String?> remark = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -19303,6 +20339,8 @@ class $HerpMeasurementTableManager extends RootTableManager<
             age: age,
             weight: weight,
             svl: svl,
+            parasiteExamine: parasiteExamine,
+            parasiteDetected: parasiteDetected,
             remark: remark,
             rowid: rowid,
           ),
@@ -19312,6 +20350,8 @@ class $HerpMeasurementTableManager extends RootTableManager<
             Value<int?> age = const Value.absent(),
             Value<double?> weight = const Value.absent(),
             Value<double?> svl = const Value.absent(),
+            Value<int?> parasiteExamine = const Value.absent(),
+            Value<int?> parasiteDetected = const Value.absent(),
             Value<String?> remark = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -19321,6 +20361,8 @@ class $HerpMeasurementTableManager extends RootTableManager<
             age: age,
             weight: weight,
             svl: svl,
+            parasiteExamine: parasiteExamine,
+            parasiteDetected: parasiteDetected,
             remark: remark,
             rowid: rowid,
           ),
@@ -19664,6 +20706,280 @@ typedef $SpecimenPartProcessedTableManager = ProcessedTableManager<
     ),
     SpecimenPartData,
     PrefetchHooks Function()>;
+typedef $ParasiteCreateCompanionBuilder = ParasiteCompanion Function({
+  Value<String?> parasiteUuid,
+  Value<String?> specimenUuid,
+  Value<String?> personnelId,
+  Value<int?> speciesID,
+  Value<String?> treatment,
+  Value<int?> sex,
+  Value<String?> lifeStage,
+  Value<String?> lifeStageDetail,
+  Value<String?> anatomicalLocation,
+  Value<int?> parasiteType,
+  Value<String> createdAt,
+  Value<String> updatedAt,
+  Value<int> rowid,
+});
+typedef $ParasiteUpdateCompanionBuilder = ParasiteCompanion Function({
+  Value<String?> parasiteUuid,
+  Value<String?> specimenUuid,
+  Value<String?> personnelId,
+  Value<int?> speciesID,
+  Value<String?> treatment,
+  Value<int?> sex,
+  Value<String?> lifeStage,
+  Value<String?> lifeStageDetail,
+  Value<String?> anatomicalLocation,
+  Value<int?> parasiteType,
+  Value<String> createdAt,
+  Value<String> updatedAt,
+  Value<int> rowid,
+});
+
+class $ParasiteFilterComposer extends Composer<_$Database, Parasite> {
+  $ParasiteFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get parasiteUuid => $composableBuilder(
+      column: $table.parasiteUuid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get specimenUuid => $composableBuilder(
+      column: $table.specimenUuid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get personnelId => $composableBuilder(
+      column: $table.personnelId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get speciesID => $composableBuilder(
+      column: $table.speciesID, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get treatment => $composableBuilder(
+      column: $table.treatment, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get sex => $composableBuilder(
+      column: $table.sex, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get lifeStage => $composableBuilder(
+      column: $table.lifeStage, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get lifeStageDetail => $composableBuilder(
+      column: $table.lifeStageDetail,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get anatomicalLocation => $composableBuilder(
+      column: $table.anatomicalLocation,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get parasiteType => $composableBuilder(
+      column: $table.parasiteType, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+}
+
+class $ParasiteOrderingComposer extends Composer<_$Database, Parasite> {
+  $ParasiteOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get parasiteUuid => $composableBuilder(
+      column: $table.parasiteUuid,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get specimenUuid => $composableBuilder(
+      column: $table.specimenUuid,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get personnelId => $composableBuilder(
+      column: $table.personnelId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get speciesID => $composableBuilder(
+      column: $table.speciesID, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get treatment => $composableBuilder(
+      column: $table.treatment, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get sex => $composableBuilder(
+      column: $table.sex, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get lifeStage => $composableBuilder(
+      column: $table.lifeStage, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get lifeStageDetail => $composableBuilder(
+      column: $table.lifeStageDetail,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get anatomicalLocation => $composableBuilder(
+      column: $table.anatomicalLocation,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get parasiteType => $composableBuilder(
+      column: $table.parasiteType,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $ParasiteAnnotationComposer extends Composer<_$Database, Parasite> {
+  $ParasiteAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get parasiteUuid => $composableBuilder(
+      column: $table.parasiteUuid, builder: (column) => column);
+
+  GeneratedColumn<String> get specimenUuid => $composableBuilder(
+      column: $table.specimenUuid, builder: (column) => column);
+
+  GeneratedColumn<String> get personnelId => $composableBuilder(
+      column: $table.personnelId, builder: (column) => column);
+
+  GeneratedColumn<int> get speciesID =>
+      $composableBuilder(column: $table.speciesID, builder: (column) => column);
+
+  GeneratedColumn<String> get treatment =>
+      $composableBuilder(column: $table.treatment, builder: (column) => column);
+
+  GeneratedColumn<int> get sex =>
+      $composableBuilder(column: $table.sex, builder: (column) => column);
+
+  GeneratedColumn<String> get lifeStage =>
+      $composableBuilder(column: $table.lifeStage, builder: (column) => column);
+
+  GeneratedColumn<String> get lifeStageDetail => $composableBuilder(
+      column: $table.lifeStageDetail, builder: (column) => column);
+
+  GeneratedColumn<String> get anatomicalLocation => $composableBuilder(
+      column: $table.anatomicalLocation, builder: (column) => column);
+
+  GeneratedColumn<int> get parasiteType => $composableBuilder(
+      column: $table.parasiteType, builder: (column) => column);
+
+  GeneratedColumn<String> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $ParasiteTableManager extends RootTableManager<
+    _$Database,
+    Parasite,
+    ParasiteData,
+    $ParasiteFilterComposer,
+    $ParasiteOrderingComposer,
+    $ParasiteAnnotationComposer,
+    $ParasiteCreateCompanionBuilder,
+    $ParasiteUpdateCompanionBuilder,
+    (ParasiteData, BaseReferences<_$Database, Parasite, ParasiteData>),
+    ParasiteData,
+    PrefetchHooks Function()> {
+  $ParasiteTableManager(_$Database db, Parasite table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $ParasiteFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $ParasiteOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $ParasiteAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String?> parasiteUuid = const Value.absent(),
+            Value<String?> specimenUuid = const Value.absent(),
+            Value<String?> personnelId = const Value.absent(),
+            Value<int?> speciesID = const Value.absent(),
+            Value<String?> treatment = const Value.absent(),
+            Value<int?> sex = const Value.absent(),
+            Value<String?> lifeStage = const Value.absent(),
+            Value<String?> lifeStageDetail = const Value.absent(),
+            Value<String?> anatomicalLocation = const Value.absent(),
+            Value<int?> parasiteType = const Value.absent(),
+            Value<String> createdAt = const Value.absent(),
+            Value<String> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ParasiteCompanion(
+            parasiteUuid: parasiteUuid,
+            specimenUuid: specimenUuid,
+            personnelId: personnelId,
+            speciesID: speciesID,
+            treatment: treatment,
+            sex: sex,
+            lifeStage: lifeStage,
+            lifeStageDetail: lifeStageDetail,
+            anatomicalLocation: anatomicalLocation,
+            parasiteType: parasiteType,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            Value<String?> parasiteUuid = const Value.absent(),
+            Value<String?> specimenUuid = const Value.absent(),
+            Value<String?> personnelId = const Value.absent(),
+            Value<int?> speciesID = const Value.absent(),
+            Value<String?> treatment = const Value.absent(),
+            Value<int?> sex = const Value.absent(),
+            Value<String?> lifeStage = const Value.absent(),
+            Value<String?> lifeStageDetail = const Value.absent(),
+            Value<String?> anatomicalLocation = const Value.absent(),
+            Value<int?> parasiteType = const Value.absent(),
+            Value<String> createdAt = const Value.absent(),
+            Value<String> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ParasiteCompanion.insert(
+            parasiteUuid: parasiteUuid,
+            specimenUuid: specimenUuid,
+            personnelId: personnelId,
+            speciesID: speciesID,
+            treatment: treatment,
+            sex: sex,
+            lifeStage: lifeStage,
+            lifeStageDetail: lifeStageDetail,
+            anatomicalLocation: anatomicalLocation,
+            parasiteType: parasiteType,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $ParasiteProcessedTableManager = ProcessedTableManager<
+    _$Database,
+    Parasite,
+    ParasiteData,
+    $ParasiteFilterComposer,
+    $ParasiteOrderingComposer,
+    $ParasiteAnnotationComposer,
+    $ParasiteCreateCompanionBuilder,
+    $ParasiteUpdateCompanionBuilder,
+    (ParasiteData, BaseReferences<_$Database, Parasite, ParasiteData>),
+    ParasiteData,
+    PrefetchHooks Function()>;
 
 class $DatabaseManager {
   final _$Database _db;
@@ -19706,6 +21022,8 @@ class $DatabaseManager {
       $HerpMeasurementTableManager(_db, _db.herpMeasurement);
   $SpecimenPartTableManager get specimenPart =>
       $SpecimenPartTableManager(_db, _db.specimenPart);
+  $ParasiteTableManager get parasite =>
+      $ParasiteTableManager(_db, _db.parasite);
 }
 
 class ListProjectResult {

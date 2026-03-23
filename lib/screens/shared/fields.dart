@@ -528,7 +528,6 @@ class UserDefinedSettingField extends ConsumerWidget {
     return SettingChips(
       title: '${typeName.toTitleCase()}s',
       controller: controller,
-      ref: ref,
       textCasePrefString: fmtPrefKey,
       chipList: ref.watch(userDefinedFieldProvider(typePrefKey)).when(
             data: (data) {

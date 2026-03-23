@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nahpu/services/providers/database.dart';
 import 'package:nahpu/services/providers/projects.dart';
 import 'package:nahpu/services/database/collevent_queries.dart';
@@ -6,20 +9,15 @@ import 'package:nahpu/services/database/media_queries.dart';
 import 'package:nahpu/services/database/site_queries.dart';
 import 'package:nahpu/services/database/coordinate_queries.dart';
 import 'package:nahpu/services/site_services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'sites.g.dart';
+final siteEntryProvider = AsyncNotifierProvider<SiteEntry, List<SiteData>>(
+  SiteEntry.new,
+);
 
-@riverpod
-class SiteEntry extends _$SiteEntry {
+class SiteEntry extends AsyncNotifier<List<SiteData>> {
   Future<List<SiteData>> _fetchSiteEntry() async {
     final projectUuid = ref.watch(projectUuidProvider);
-
-    final siteEntries =
-        SiteQuery(ref.read(databaseProvider)).getAllSites(projectUuid);
-
-    return siteEntries;
+    return SiteQuery(ref.read(databaseProvider)).getAllSites(projectUuid);
   }
 
   @override
@@ -29,42 +27,39 @@ class SiteEntry extends _$SiteEntry {
 
   Future<void> search(String? query) async {
     if (query == null || query.isEmpty) return;
-    state = const AsyncValue.loading();
+    final current = await future;
+    if (current.isEmpty) return;
+
+    state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      if (state.value == null) return [];
       final sites = await _fetchSiteEntry();
-      final filteredSites =
-          SiteSearchServices(siteEntries: sites).search(query.toLowerCase());
-      return filteredSites;
+      return SiteSearchServices(siteEntries: sites).search(query.toLowerCase());
     });
   }
 }
 
-final coordinateBySiteProvider = FutureProvider.family
-    .autoDispose<List<CoordinateData>, int>((ref, siteId) =>
+final coordinateBySiteProvider = FutureProvider.autoDispose
+    .family<List<CoordinateData>, int>((ref, siteId) =>
         CoordinateQuery(ref.read(databaseProvider))
             .getCoordinatesBySiteID(siteId));
 
-final coordinateByEventProvider = FutureProvider.family
-    .autoDispose<List<CoordinateData>, int>((ref, collEventId) async {
+final coordinateByEventProvider = FutureProvider.autoDispose
+    .family<List<CoordinateData>, int>((ref, collEventId) async {
   final collEvent = await CollEventQuery(ref.read(databaseProvider))
       .getCollEventById(collEventId);
   if (collEvent.siteID != null) {
-    final siteId = collEvent.siteID!;
-    final coordinates = CoordinateQuery(ref.read(databaseProvider))
-        .getCoordinatesBySiteID(siteId);
-    return coordinates;
-  } else {
-    return [];
+    return CoordinateQuery(ref.read(databaseProvider))
+        .getCoordinatesBySiteID(collEvent.siteID!);
   }
+  return [];
 });
 
-@riverpod
-Future<List<MediaData>> siteMedia(Ref ref, {required int siteId}) async {
-  List<SiteMediaData> mediaList =
+final siteMediaProvider = FutureProvider.autoDispose
+    .family<List<MediaData>, int>((ref, siteId) async {
+  final List<SiteMediaData> mediaList =
       await SiteQuery(ref.read(databaseProvider)).getSiteMedia(siteId);
-  List<MediaData> mediaDataList = [];
-  for (SiteMediaData media in mediaList) {
+  final List<MediaData> mediaDataList = [];
+  for (final SiteMediaData media in mediaList) {
     if (media.mediaId != null) {
       mediaDataList.add(
         await MediaDbQuery(ref.read(databaseProvider)).getMedia(media.mediaId!),
@@ -72,14 +67,14 @@ Future<List<MediaData>> siteMedia(Ref ref, {required int siteId}) async {
     }
   }
   return mediaDataList;
-}
+});
 
-@riverpod
-Future<List<SiteData>> siteInEvent(Ref ref) async {
-  List<int?> siteList = await CollEventQuery(ref.read(databaseProvider))
+final siteInEventProvider =
+    FutureProvider.autoDispose<List<SiteData>>((ref) async {
+  final List<int?> siteList = await CollEventQuery(ref.read(databaseProvider))
       .getAllDistinctSites(ref.read(projectUuidProvider));
-  List<SiteData> siteDataList = [];
-  for (int? siteId in siteList) {
+  final List<SiteData> siteDataList = [];
+  for (final int? siteId in siteList) {
     if (siteId != null) {
       siteDataList.add(
         await SiteQuery(ref.read(databaseProvider)).getSiteById(siteId),
@@ -87,4 +82,4 @@ Future<List<SiteData>> siteInEvent(Ref ref) async {
     }
   }
   return siteDataList;
-}
+});

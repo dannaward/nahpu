@@ -2,6 +2,7 @@
 
 pub struct RecordWriter {
     /// JSON string containing the records to be exported.
+    #[allow(dead_code)]
     json_content: String,
     /// The path to the output file where the records will be written.
     output_path: String,
