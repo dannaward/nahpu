@@ -9,6 +9,8 @@ New to v7:
 2. Add herpetofauna measurement table
 3. Add showBatFields boolean field to mammalMeasurment table
 4. Add additional bat measurement fields
+5. Add a parasite table.
+6. Add parasiteExamine and parasiteDetected fields to mammalMeasurement, birdMeasurement, and herpMeasurement
 
 New to v6:
 1. Add collectionDate to the specimen table
@@ -285,6 +287,8 @@ CREATE TABLE mammalMeasurement (
     embryoLeftCount INT,
     embryoRightCount INT,
     embryoCR INT,
+    parasiteExamine INT,
+    parasiteDetected INT,
     remark TEXT,
     FOREIGN KEY(specimenUuid) REFERENCES specimen(uuid)
 );
@@ -327,6 +331,8 @@ CREATE TABLE avianMeasurement (
     tailMolt TEXT,
     bodyMolt INT, -- encode text
     moltRemark TEXT,
+    parasiteExamine INT,
+    parasiteDetected INT,
     specimenRemark TEXT,
     habitatRemark TEXT,
     FOREIGN KEY(specimenUuid) REFERENCES specimen(uuid)
@@ -338,6 +344,8 @@ CREATE TABLE herpMeasurement (
     age INT,
     weight REAL,
     svl REAL,
+    parasiteExamine INT,
+    parasiteDetected INT,
     remark TEXT,
     FOREIGN KEY(specimenUuid) REFERENCES specimen(uuid)
 );
@@ -361,5 +369,22 @@ CREATE TABLE specimenPart (
     FOREIGN KEY(specimenUuid) REFERENCES specimen(uuid),
     FOREIGN KEY(personnelId) REFERENCES personnel(uuid)
 );
+
+CREATE TABLE parasite (
+    parasiteUuid TEXT PRIMARY KEY,
+    specimenUuid TEXT NOT NULL,
+    personnelID TEXT,
+    speciesID INT,
+    treatment TEXT,
+    sex INT,
+    lifeStage TEXT,
+    lifeStageDetail TEXT,
+    parasiteType INT, -- 0 endoparasite and 1 ectoparasite
+    createdAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    anatomicalLocation TEXT,
+    FOREIGN KEY(specimenUuid) REFERENCES specimen(uuid),
+    FOREIGN KEY(personnelId) REFERENCES personnel(uuid)
+)
 
 listProject: SELECT uuid,name,created,lastAccessed FROM project;
