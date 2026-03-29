@@ -11,6 +11,7 @@ New to v7:
 4. Add additional bat measurement fields
 5. Add a parasite table.
 6. Add parasiteExamine and parasiteDetected fields to mammalMeasurement, birdMeasurement, and herpMeasurement
+5. Add personnel and project fields for enhanced specimen IDs
 
 New to v6:
 1. Add collectionDate to the specimen table
@@ -27,8 +28,7 @@ CREATE TABLE project (
     startDate TEXT,
     endDate TEXT,
     created TEXT,
-    lastAccessed Text,
-    projectID TEXT
+    lastAccessed Text
 );
 
 CREATE TABLE site (
@@ -237,6 +237,7 @@ CREATE TABLE specimen (
     coordinateID INT,
     catalogerID TEXT,
     fieldNumber INT,
+    projectFieldNumber INT,
     collEventID INT,
     isMultipleCollector INT,
     collPersonnelID INT,

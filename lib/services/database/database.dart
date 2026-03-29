@@ -125,6 +125,9 @@ class Database extends _$Database {
     await m.addColumn(herpMeasurement, herpMeasurement.parasiteDetected);
     await m.addColumn(avianMeasurement, avianMeasurement.parasiteExamine);
     await m.addColumn(avianMeasurement, avianMeasurement.parasiteDetected);
+    // Enhanced specimen ID options
+    await m.addColumn(personnel, personnel.isRegisterField);
+    await m.addColumn(specimen, specimen.projectFieldNumber);
   }
 
   Future<void> _migrateFromVersion5(Migrator m) async {
@@ -231,20 +234,29 @@ class Database extends _$Database {
 
     await customStatement('VACUUM INTO ?', [file.path]);
   }
-}
 
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    final file = await dBPath;
-    if (kDebugMode) {
-      print('App database path: ${file.path}');
-    }
-    return NativeDatabase.createInBackground(file, logStatements: true);
-  });
+  static LazyDatabase _openConnection() {
+    return LazyDatabase(() async {
+      final file = await dBPath;
+
+      if (!await file.parent.exists()) {
+        await file.parent.create(recursive: true);
+      }
+
+      if (kDebugMode) {
+        print('========================================');
+        print('App database path: ${file.absolute.path}');
+        print('Directory exists: ${await file.parent.exists()}');
+        print('Database exists: ${await file.exists()}');
+        print('========================================');
+      }
+
+      return NativeDatabase.createInBackground(file, logStatements: true);
+    });
+  }
 }
 
 Future<File> get dBPath async {
-  // We save database to the default document directory locations.
   final dbDir = await nahpuDocumentDir;
   return File(p.join(dbDir.path, 'nahpu.db'));
 }

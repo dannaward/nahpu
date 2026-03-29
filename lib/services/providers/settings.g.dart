@@ -269,3 +269,45 @@ abstract class _$TextCaseFmtNotifier extends $AsyncNotifier<TextCaseFmt> {
             ));
   }
 }
+
+@ProviderFor(FieldIdModeNotifier)
+final fieldIdModeProvider = FieldIdModeNotifierProvider._();
+
+final class FieldIdModeNotifierProvider
+    extends $AsyncNotifierProvider<FieldIdModeNotifier, FieldIdMode> {
+  FieldIdModeNotifierProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'fieldIdModeProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$fieldIdModeNotifierHash();
+
+  @$internal
+  @override
+  FieldIdModeNotifier create() => FieldIdModeNotifier();
+}
+
+String _$fieldIdModeNotifierHash() =>
+    r'44633d34a84e547c1bc1c207a68227c11b491e35';
+
+abstract class _$FieldIdModeNotifier extends $AsyncNotifier<FieldIdMode> {
+  FutureOr<FieldIdMode> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<AsyncValue<FieldIdMode>, FieldIdMode>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<FieldIdMode>, FieldIdMode>,
+        AsyncValue<FieldIdMode>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}
